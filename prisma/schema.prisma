@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SessionStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+  SOLD_OUT
+}
+
+enum FlowType {
+  A
+  B
+}
+
+enum TierType {
+  EARLY_BIRD
+  STANDARD
+  LAST_MINUTE
+  CUSTOM
+}
+
+enum RegistrationStatus {
+  UNFINISHED
+  FORM_SUBMITTED
+  DEPOSIT_PAID
+  CONTRACT_SENT
+  CONTRACT_SIGNED
+  PAID_IN_FULL
+  CANCELLED
+  OTHER
+}
+
+enum PaymentMethod {
+  STRIPE
+  BANK_TRANSFER
+}
+
+enum BlogStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+}
+
+model Session {
+  id                   String        @id @default(cuid())
+  slug                 String        @unique
+  name                 String
+  tagline              String?
+  description          String?
+  status               SessionStatus @default(ACTIVE)
+  flowType             FlowType      @default(A)
+  startDate            DateTime
+  endDate              DateTime
+  minAge               Int
+  maxAge               Int
+  capacity             Int           @default(28)
+  spotsTaken           Int           @default(0)
+  confirmedThreshold   Int           @default(16)
+  homepageVisible      Boolean       @default(true)
+  displayOrder         Int           @default(0)
+  lastBookingAt        DateTime?
+  viewersNow           Int           @default(0)
+  schedule             Json?
+  photoUrls            String[]
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  pricingTiers   PricingTier[]
+  registrations  Registration[]
+  trainers       SessionTrainer[]
+  testimonials   Testimonial[]
+}
+
+model Trainer {
+  id                String           @id @default(cuid())
+  name              String
+  title             String
+  bio               String?
+  photoUrl          String?
+  credentials       String?
+  personalStatement String?
+  createdAt         DateTime         @default(now())
+
+  sessions SessionTrainer[]
+}
+
+model SessionTrainer {
+  sessionId String
+  trainerId String
+  session   Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  trainer   Trainer @relation(fields: [trainerId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, trainerId])
+}
+
+model PricingTier {
+  id                     String    @id @default(cuid())
+  sessionId              String
+  tierType               TierType
+  price                  Float
+  label                  String
+  badgeText              String?
+  activeUntil            DateTime?
+  activateWhenSpotsBelow Int?
+  isActive               Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  session       Session        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  registrations Registration[]
+}
+
+model PromoCode {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  discountType  String
+  discountValue Float
+  validFrom     DateTime?
+  validUntil    DateTime?
+  maxUses       Int?
+  notes         String?
+  status        String    @default("active")
+  appliesToAll  Boolean   @default(true)
+  sessionIds    String[]
+  tierTypes     String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  uses          PromoCodeUse[]
+  registrations Registration[]
+}
+
+model PromoCodeUse {
+  id             String    @id @default(cuid())
+  promoCodeId    String
+  registrationId String
+  usedAt         DateTime  @default(now())
+
+  promoCode    PromoCode    @relation(fields: [promoCodeId], references: [id])
+  registration Registration @relation(fields: [registrationId], references: [id])
+}
+
+model Registration {
+  id              String             @id @default(cuid())
+  sessionId       String
+  status          RegistrationStatus @default(UNFINISHED)
+  flowType        FlowType
+  lastStepReached Int                @default(0)
+  parentName      String?
+  email           String?
+  phone           String?
+  attribution     String?
+  notes           String?
+  internalNotes   String?
+  promoCodeId     String?
+  priceTierId     String?
+  totalAmount     Float?
+  depositAmount   Float              @default(200)
+  paymentMethod   PaymentMethod?
+  stripeSessionId String?
+  cancelReason    String?
+  submittedAt     DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  session       Session        @relation(fields: [sessionId], references: [id])
+  promoCode     PromoCode?     @relation(fields: [promoCodeId], references: [id])
+  priceTier     PricingTier?   @relation(fields: [priceTierId], references: [id])
+  children      Child[]
+  promoCodeUses PromoCodeUse[]
+}
+
+model Child {
+  id             String   @id @default(cuid())
+  registrationId String
+  firstName      String
+  lastName       String
+  dateOfBirth    DateTime
+  dietaryNotes   String?
+  medicalNotes   String?
+  createdAt      DateTime @default(now())
+
+  registration Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  sessionId   String?
+  parentName  String
+  childAge    Int?
+  sessionYear Int?
+  quote       String
+  rating      Int      @default(5)
+  photoUrl    String?
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  session Session? @relation(fields: [sessionId], references: [id])
+}
+
+model BlogPost {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  coverImage  String?
+  body        String
+  author      String     @default("Мечта в джоба")
+  status      BlogStatus @default(DRAFT)
+  publishedAt DateTime?
+  scheduledAt DateTime?
+  metaTitle   String?
+  metaDesc    String?
+  tags        String[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("editor")
+  createdAt DateTime @default(now())
+}
