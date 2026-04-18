@@ -75,7 +75,7 @@ export default function SessionBookingBlock({ session }: { session: SessionWithP
           </div>
         )}
         <div className="text-xs text-moss/50 pt-1">
-          💸 Отстъпка 6% за второ дете от едно семейство
+          💸 Отстъпка 5% за 2-ро и 10% за 3-то дете
         </div>
       </div>
 

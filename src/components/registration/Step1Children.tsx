@@ -4,7 +4,6 @@ import { useState } from "react";
 import type { Session, PricingTier } from "@prisma/client";
 import { formatPrice } from "@/lib/utils";
 import type { ChildData } from "./RegistrationForm";
-import { Plus, Minus } from "lucide-react";
 
 type SessionWithPricing = Session & { pricingTiers: PricingTier[] };
 
@@ -22,32 +21,46 @@ const emptyChild = (): ChildData => ({
   medicalNotes: "",
 });
 
+function calcTotal(basePrice: number, count: number) {
+  // 1st child: full price
+  // 2nd child: 5% off
+  // 3rd child: 10% off
+  let total = basePrice;
+  if (count >= 2) total += basePrice * 0.95;
+  if (count >= 3) total += basePrice * 0.90;
+  return total;
+}
+
 export default function Step1Children({ session, onNext, loading }: Step1ChildrenProps) {
+  const [childCount, setChildCount] = useState(1);
   const [children, setChildren] = useState<ChildData[]>([emptyChild()]);
   const [promoCode, setPromoCode] = useState("");
-  const [promoResult, setPromoResult] = useState<{ valid: boolean; label?: string; error?: string } | null>(null);
+  const [promoResult, setPromoResult] = useState<{ valid: boolean; label?: string; discountPct?: number; error?: string } | null>(null);
   const [promoLoading, setPromoLoading] = useState(false);
 
   const earlyBird = session.pricingTiers.find(
     (t) => t.tierType === "EARLY_BIRD" && t.isActive && t.activeUntil && new Date(t.activeUntil) > new Date()
   );
   const basePrice = earlyBird?.price ?? session.pricingTiers.find((t) => t.tierType === "STANDARD")?.price ?? 0;
-  const childCount = children.length;
-  let totalBeforePromo = basePrice * childCount;
-  if (childCount >= 2) {
-    totalBeforePromo = basePrice * 1 + basePrice * (childCount - 1) * 0.94;
+
+  const subtotal = calcTotal(basePrice, childCount);
+  const promoDiscount = promoResult?.valid && promoResult.discountPct
+    ? subtotal * (promoResult.discountPct / 100)
+    : 0;
+  const total = subtotal - promoDiscount;
+
+  function handleCountChange(count: number) {
+    setChildCount(count);
+    setChildren((prev) => {
+      if (count > prev.length) {
+        return [...prev, ...Array.from({ length: count - prev.length }, emptyChild)];
+      }
+      return prev.slice(0, count);
+    });
   }
 
   function updateChild(i: number, field: keyof ChildData, value: string) {
     setChildren((prev) => prev.map((c, idx) => (idx === i ? { ...c, [field]: value } : c)));
-  }
-
-  function addChild() {
-    if (children.length < 5) setChildren((prev) => [...prev, emptyChild()]);
-  }
-
-  function removeChild(i: number) {
-    if (children.length > 1) setChildren((prev) => prev.filter((_, idx) => idx !== i));
   }
 
   async function validatePromo() {
@@ -74,108 +87,105 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
 
   const isValid = children.every((c) => c.firstName && c.lastName && c.dateOfBirth);
 
+  const inputClass = "w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+
+      {/* Child count selector */}
       <div className="bg-cream rounded-2xl border border-forest/10 p-6">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-forest font-bold text-base">Данни за детето/децата</h2>
-          <div className="flex items-center gap-2">
+        <h2 className="text-forest font-bold text-base mb-4">Брой деца</h2>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { count: 1, label: "1 дете", sub: formatPrice(basePrice) },
+            { count: 2, label: "2 деца", sub: "5% отстъпка за 2-ро" },
+            { count: 3, label: "3 деца", sub: "10% отстъпка за 3-то" },
+          ].map(({ count, label, sub }) => (
             <button
+              key={count}
               type="button"
-              onClick={() => removeChild(children.length - 1)}
-              disabled={children.length <= 1}
-              className="w-8 h-8 rounded-full bg-forest/10 hover:bg-forest/20 disabled:opacity-30 flex items-center justify-center text-forest transition-all"
+              onClick={() => handleCountChange(count)}
+              className={`flex flex-col items-center gap-1 py-4 px-3 rounded-2xl border-2 transition-all ${
+                childCount === count
+                  ? "border-teal bg-mint text-forest"
+                  : "border-forest/10 bg-sand hover:border-teal/40 text-moss hover:text-forest"
+              }`}
             >
-              <Minus className="w-3.5 h-3.5" />
+              <span className={`text-2xl font-light ${childCount === count ? "text-teal" : "text-forest/40"}`} style={{ fontFamily: "var(--font-serif)" }}>
+                {count}
+              </span>
+              <span className="font-semibold text-sm">{label}</span>
+              <span className="text-xs opacity-70 text-center leading-tight">{sub}</span>
             </button>
-            <span className="text-forest font-bold text-sm w-4 text-center">{childCount}</span>
-            <button
-              type="button"
-              onClick={addChild}
-              disabled={children.length >= 5}
-              className="w-8 h-8 rounded-full bg-forest/10 hover:bg-forest/20 disabled:opacity-30 flex items-center justify-center text-forest transition-all"
-            >
-              <Plus className="w-3.5 h-3.5" />
-            </button>
-          </div>
+          ))}
         </div>
+      </div>
 
-        <div className="space-y-5">
-          {children.map((child, i) => (
-            <div key={i} className={`space-y-3 ${i > 0 ? "pt-5 border-t border-forest/10" : ""}`}>
-              {children.length > 1 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-moss text-xs font-medium">Дете {i + 1}</span>
-                  {i > 0 && (
-                    <button type="button" onClick={() => removeChild(i)} className="text-red-400/60 hover:text-red-400 text-xs transition-colors">
-                      Премахни
-                    </button>
-                  )}
-                </div>
-              )}
+      {/* Child forms */}
+      <div className="bg-cream rounded-2xl border border-forest/10 p-6 space-y-6">
+        <h2 className="text-forest font-bold text-base">Данни за {childCount === 1 ? "детето" : "децата"}</h2>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-moss text-xs mb-1.5">Собствено име *</label>
-                  <input
-                    required
-                    value={child.firstName}
-                    onChange={(e) => updateChild(i, "firstName", e.target.value)}
-                    className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
-                    placeholder="Иван"
-                  />
-                </div>
-                <div>
-                  <label className="block text-moss text-xs mb-1.5">Фамилия *</label>
-                  <input
-                    required
-                    value={child.lastName}
-                    onChange={(e) => updateChild(i, "lastName", e.target.value)}
-                    className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
-                    placeholder="Иванов"
-                  />
-                </div>
-              </div>
+        {children.map((child, i) => (
+          <div key={i} className={`space-y-3 ${i > 0 ? "pt-6 border-t border-forest/10" : ""}`}>
+            {childCount > 1 && (
+              <p className="text-teal text-xs font-semibold uppercase tracking-wide">Дете {i + 1}</p>
+            )}
 
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-moss text-xs mb-1.5">Дата на раждане *</label>
+                <label className="block text-moss text-xs mb-1.5">Собствено име *</label>
                 <input
-                  type="date"
                   required
-                  value={child.dateOfBirth}
-                  onChange={(e) => updateChild(i, "dateOfBirth", e.target.value)}
-                  className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-teal/50 transition-all"
+                  value={child.firstName}
+                  onChange={(e) => updateChild(i, "firstName", e.target.value)}
+                  className={inputClass}
+                  placeholder="Иван"
                 />
               </div>
-
               <div>
-                <label className="block text-moss text-xs mb-1.5">Хранителни ограничения / алергии</label>
+                <label className="block text-moss text-xs mb-1.5">Фамилия *</label>
                 <input
-                  value={child.dietaryNotes}
-                  onChange={(e) => updateChild(i, "dietaryNotes", e.target.value)}
-                  className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
-                  placeholder="Напр. вегетарианско, алергия към ядки"
-                />
-              </div>
-
-              <div>
-                <label className="block text-moss text-xs mb-1.5">Медицинска информация</label>
-                <input
-                  value={child.medicalNotes}
-                  onChange={(e) => updateChild(i, "medicalNotes", e.target.value)}
-                  className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
-                  placeholder="Неща, за които трябва да знаем"
+                  required
+                  value={child.lastName}
+                  onChange={(e) => updateChild(i, "lastName", e.target.value)}
+                  className={inputClass}
+                  placeholder="Иванов"
                 />
               </div>
             </div>
-          ))}
-        </div>
 
-        {childCount >= 2 && (
-          <div className="mt-4 p-3 rounded-lg bg-mint border border-teal/30 text-teal text-xs">
-            🎉 Отстъпка 6% за второто дете автоматично приложена!
+            <div>
+              <label className="block text-moss text-xs mb-1.5">Дата на раждане *</label>
+              <input
+                type="date"
+                required
+                value={child.dateOfBirth}
+                onChange={(e) => updateChild(i, "dateOfBirth", e.target.value)}
+                className={inputClass}
+              />
+            </div>
+
+            <div>
+              <label className="block text-moss text-xs mb-1.5">Хранителни ограничения / алергии</label>
+              <input
+                value={child.dietaryNotes}
+                onChange={(e) => updateChild(i, "dietaryNotes", e.target.value)}
+                className={inputClass}
+                placeholder="Напр. вегетарианско, алергия към ядки"
+              />
+            </div>
+
+            <div>
+              <label className="block text-moss text-xs mb-1.5">Медицинска информация</label>
+              <input
+                value={child.medicalNotes}
+                onChange={(e) => updateChild(i, "medicalNotes", e.target.value)}
+                className={inputClass}
+                placeholder="Неща, за които трябва да знаем"
+              />
+            </div>
           </div>
-        )}
+        ))}
       </div>
 
       {/* Promo code */}
@@ -185,7 +195,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
           <input
             value={promoCode}
             onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoResult(null); }}
-            className="flex-1 bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all uppercase"
+            className={`${inputClass} flex-1 uppercase`}
             placeholder="SUMMER10"
           />
           <button
@@ -205,24 +215,49 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
       </div>
 
       {/* Price summary */}
-      <div className="bg-cream rounded-2xl border border-forest/10 p-5">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-moss text-sm">
-            {childCount} {childCount === 1 ? "дете" : "деца"} × {formatPrice(basePrice)}
-          </span>
-          <span className="text-forest font-semibold">{formatPrice(totalBeforePromo)}</span>
+      <div className="bg-cream rounded-2xl border border-forest/10 p-5 space-y-2">
+        {/* Row: 1st child */}
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-moss">1-во дете</span>
+          <span className="text-forest font-medium">{formatPrice(basePrice)}</span>
         </div>
+
+        {/* Row: 2nd child */}
         {childCount >= 2 && (
-          <div className="flex items-center justify-between text-xs text-teal mb-2">
-            <span>Отстъпка за второ дете (6%)</span>
-            <span>-{formatPrice(basePrice * 0.06)}</span>
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-moss">
+              2-ро дете
+              <span className="ml-1.5 text-xs bg-mint text-teal px-1.5 py-0.5 rounded-full">-5%</span>
+            </span>
+            <span className="text-forest font-medium">{formatPrice(basePrice * 0.95)}</span>
           </div>
         )}
-        <div className="border-t border-forest/10 pt-2 flex items-center justify-between">
+
+        {/* Row: 3rd child */}
+        {childCount >= 3 && (
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-moss">
+              3-то дете
+              <span className="ml-1.5 text-xs bg-mint text-teal px-1.5 py-0.5 rounded-full">-10%</span>
+            </span>
+            <span className="text-forest font-medium">{formatPrice(basePrice * 0.90)}</span>
+          </div>
+        )}
+
+        {/* Promo row */}
+        {promoDiscount > 0 && (
+          <div className="flex items-center justify-between text-sm text-teal">
+            <span>Промо код ({promoResult?.label})</span>
+            <span>-{formatPrice(promoDiscount)}</span>
+          </div>
+        )}
+
+        {/* Total */}
+        <div className="border-t border-forest/10 pt-3 flex items-center justify-between">
           <span className="text-forest font-semibold">Обща сума</span>
-          <span className="text-teal font-bold text-lg">{formatPrice(totalBeforePromo)}</span>
+          <span className="text-teal font-bold text-lg">{formatPrice(total)}</span>
         </div>
-        <p className="text-moss/50 text-xs mt-2">Депозит €200 за потвърждение на място</p>
+        <p className="text-moss/50 text-xs">Депозит €200 за потвърждение на място</p>
       </div>
 
       <button

@@ -60,9 +60,11 @@ export async function POST(req: NextRequest) {
       const childCount = data.children.length;
       let totalAmount = basePrice * childCount;
 
-      // Sibling discount
+      // Sibling discount: 2nd child 5% off, 3rd child 10% off
       if (childCount >= 2) {
-        totalAmount = basePrice * 1 + basePrice * (childCount - 1) * 0.94;
+        totalAmount = basePrice; // 1st child full price
+        if (childCount >= 2) totalAmount += basePrice * 0.95; // 2nd child 5% off
+        if (childCount >= 3) totalAmount += basePrice * 0.90; // 3rd child 10% off
       }
 
       // Handle promo code
