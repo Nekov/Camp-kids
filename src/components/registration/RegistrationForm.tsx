@@ -137,8 +137,8 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white mb-1">Записване</h1>
-        <p className="text-white/60 text-sm">{session.name}</p>
-        <p className="text-white/40 text-xs">
+        <p className="text-moss text-sm">{session.name}</p>
+        <p className="text-moss/60 text-xs">
           {formatDateRange(session.startDate, session.endDate)} • {session.minAge}–{session.maxAge} г.
           {displayPrice && ` • От ${formatPrice(displayPrice.price)}`}
         </p>
@@ -153,21 +153,21 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                   s < step
-                    ? "bg-[#2d6a2f] text-white"
+                    ? "bg-teal text-white"
                     : s === step
-                    ? "bg-[#f5a623] text-[#0d1b2a]"
-                    : "bg-white/10 text-white/40"
+                    ? "bg-teal text-forest"
+                    : "bg-forest/8 text-moss/60"
                 }`}
               >
                 {s < step ? "✓" : s}
               </div>
               {i < totalSteps - 1 && (
-                <div className={`flex-1 h-0.5 w-12 ${s < step ? "bg-[#2d6a2f]" : "bg-white/10"}`} />
+                <div className={`flex-1 h-0.5 w-12 ${s < step ? "bg-teal" : "bg-forest/8"}`} />
               )}
             </div>
           );
         })}
-        <div className="ml-2 text-white/50 text-xs">
+        <div className="ml-2 text-moss text-xs">
           Стъпка {step} от {totalSteps}
         </div>
       </div>

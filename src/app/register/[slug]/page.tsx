@@ -28,7 +28,7 @@ export default async function RegisterPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#0d1b2a] pt-24 pb-16">
+      <main className="min-h-screen bg-night pt-24 pb-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <RegistrationForm session={session} />
         </div>

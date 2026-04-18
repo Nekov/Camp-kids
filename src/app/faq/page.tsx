@@ -51,20 +51,23 @@ export default function FaqPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#0d1b2a] min-h-screen">
-        <section className="pt-28 pb-16 bg-gradient-to-br from-[#0a1628] to-[#12253a]">
+      <main className="bg-sand min-h-screen">
+        <section className="pt-28 pb-16 bg-cream border-b border-forest/10">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
-            <span className="text-[#f5a623] text-sm font-semibold uppercase tracking-widest">FAQ</span>
-            <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white mb-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-px bg-teal" />
+              <span className="text-teal text-xs font-semibold uppercase tracking-widest">FAQ</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
               Въпроси и отговори
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-moss text-base">
               Не намирате отговора? Пишете ни на{" "}
-              <a href="mailto:info@dreaminmypocket.org" className="text-[#f5a623] hover:underline">
+              <a href="mailto:info@dreaminmypocket.org" className="text-teal hover:underline">
                 info@dreaminmypocket.org
               </a>{" "}
               или се обадете на{" "}
-              <a href="tel:+359885571638" className="text-[#f5a623] hover:underline">
+              <a href="tel:+359885571638" className="text-teal hover:underline">
                 0885 571 638
               </a>
               .
@@ -75,7 +78,7 @@ export default function FaqPage() {
         <section className="py-12 max-w-3xl mx-auto px-4 sm:px-6 space-y-8">
           {faqCategories.map((cat) => (
             <div key={cat.category}>
-              <h2 className="text-white font-bold text-base mb-3 border-b border-white/10 pb-2">
+              <h2 className="text-forest font-semibold text-base mb-3 border-b border-forest/10 pb-2">
                 {cat.category}
               </h2>
               <div className="space-y-2">
@@ -83,17 +86,17 @@ export default function FaqPage() {
                   const key = `${cat.category}-${item.q}`;
                   const isOpen = openItem === key;
                   return (
-                    <div key={key} className="rounded-xl bg-[#1e3a52]/40 border border-white/10 overflow-hidden">
+                    <div key={key} className="rounded-xl bg-cream border border-forest/10 overflow-hidden">
                       <button
-                        className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-colors"
+                        className="w-full flex items-center justify-between p-4 text-left hover:bg-forest/3 transition-colors"
                         onClick={() => setOpenItem(isOpen ? null : key)}
                       >
-                        <span className="text-white font-medium text-sm">{item.q}</span>
-                        <ChevronDown className={cn("w-4 h-4 text-white/40 shrink-0 ml-3 transition-transform", isOpen && "rotate-180")} />
+                        <span className="text-forest font-medium text-sm">{item.q}</span>
+                        <ChevronDown className={cn("w-4 h-4 text-moss shrink-0 ml-3 transition-transform", isOpen && "rotate-180")} />
                       </button>
                       {isOpen && (
-                        <div className="px-4 pb-4 border-t border-white/5">
-                          <p className="text-white/70 text-sm leading-relaxed pt-3">{item.a}</p>
+                        <div className="px-4 pb-4 border-t border-forest/8">
+                          <p className="text-moss text-sm leading-relaxed pt-3">{item.a}</p>
                         </div>
                       )}
                     </div>
@@ -104,9 +107,9 @@ export default function FaqPage() {
           ))}
         </section>
 
-        <section className="py-12 text-center">
-          <p className="text-white/50 text-sm mb-4">Готови да запишете дете?</p>
-          <Link href="/#sessions" className="inline-flex items-center gap-2 bg-[#f5a623] hover:bg-[#f7b84a] text-[#0d1b2a] font-bold px-8 py-4 rounded-full transition-all">
+        <section className="py-12 text-center bg-cream border-t border-forest/10">
+          <p className="text-moss text-sm mb-4">Готови да запишете дете?</p>
+          <Link href="/#sessions" className="inline-flex items-center gap-2 bg-teal hover:bg-teal-dark text-white font-semibold px-8 py-4 rounded-full transition-all">
             Виж програмите →
           </Link>
         </section>
