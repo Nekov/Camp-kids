@@ -7,7 +7,8 @@ import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
 import SessionBookingBlock from "@/components/session/SessionBookingBlock";
 import SessionSchedule from "@/components/session/SessionSchedule";
-import { formatDateRange, spotsRemaining, fillPercent, getProgressColor, getProgressLabel, formatPrice } from "@/lib/utils";
+import SessionGallery from "@/components/session/SessionGallery";
+import { formatDateRange, spotsRemaining, fillPercent, formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -50,8 +51,6 @@ export default async function SessionPage({ params }: Props) {
 
   const remaining = spotsRemaining(session.capacity, session.spotsTaken);
   const pct = fillPercent(session.capacity, session.spotsTaken);
-  const color = getProgressColor(pct);
-  const label = getProgressLabel(pct);
   const isSoldOut = session.status === "SOLD_OUT" || remaining === 0;
   const isConfirmed = session.spotsTaken >= session.confirmedThreshold;
   const earlyBird = session.pricingTiers.find((t) => t.tierType === "EARLY_BIRD");
@@ -81,40 +80,34 @@ export default async function SessionPage({ params }: Props) {
       <Navbar />
       <main className="bg-sand">
 
-        {/* Hero — light, no dark background */}
-        <section className="pt-28 pb-10 border-b border-forest/10">
+        {/* ── Hero: compact, no progress bar ── */}
+        <section className="pt-24 pb-8 border-b border-forest/8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
-            {/* Breadcrumb */}
-            <Link
-              href="/#sessions"
-              className="inline-flex items-center gap-1.5 text-moss/60 hover:text-forest text-sm mb-6 transition-colors"
-            >
+            <Link href="/#sessions" className="inline-flex items-center gap-1.5 text-moss/60 hover:text-forest text-sm mb-5 transition-colors">
               ← Всички програми
             </Link>
 
             <div className="grid lg:grid-cols-3 gap-10 items-start">
-              {/* Left: title + meta */}
               <div className="lg:col-span-2">
                 {isConfirmed && (
-                  <div className="inline-flex items-center gap-2 bg-mint border border-teal/30 rounded-full px-4 py-1.5 mb-4 text-sm text-teal font-medium">
+                  <div className="inline-flex items-center gap-2 bg-mint border border-teal/30 rounded-full px-3 py-1 mb-3 text-sm text-teal font-medium">
                     ✅ Сесията е потвърдена
                   </div>
                 )}
 
                 <h1
-                  className="text-4xl sm:text-5xl lg:text-6xl font-light text-forest leading-tight mb-3"
+                  className="text-4xl sm:text-5xl lg:text-[3.5rem] font-light text-forest leading-tight mb-2"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
                   {session.name}
                 </h1>
 
                 {session.tagline && (
-                  <p className="text-teal text-lg font-medium mb-6">{session.tagline}</p>
+                  <p className="text-teal text-lg font-medium mb-5">{session.tagline}</p>
                 )}
 
-                {/* Key details */}
-                <div className="flex flex-wrap gap-3 mb-8">
+                {/* Meta pills */}
+                <div className="flex flex-wrap gap-2">
                   {[
                     { icon: "📅", text: formatDateRange(session.startDate, session.endDate) },
                     { icon: "👶", text: `${session.minAge}–${session.maxAge} години` },
@@ -134,34 +127,9 @@ export default async function SessionPage({ params }: Props) {
                     </span>
                   ))}
                 </div>
-
-                {/* Availability bar */}
-                <div className="max-w-sm">
-                  <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className={cn(
-                      "font-semibold",
-                      color === "green" && "text-teal",
-                      color === "yellow" && "text-amber",
-                      color === "red" && "text-ember",
-                    )}>
-                      {isSoldOut ? "Изчерпано" : `🔥 ${remaining} свободни места`}
-                    </span>
-                    <span className="text-moss/50">{label}</span>
-                  </div>
-                  <div className="h-2 bg-forest/10 rounded-full overflow-hidden">
-                    <div
-                      className={cn("h-full rounded-full transition-all",
-                        color === "green" && "bg-sage",
-                        color === "yellow" && "bg-amber",
-                        color === "red" && "bg-ember",
-                      )}
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
               </div>
 
-              {/* Right: booking block (visible in hero on desktop) */}
+              {/* Booking block in hero on desktop */}
               <div className="hidden lg:block lg:col-span-1">
                 <div className="sticky top-24">
                   <SessionBookingBlock session={session} />
@@ -171,30 +139,33 @@ export default async function SessionPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Main content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        {/* ── Main content ── */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <div className="grid lg:grid-cols-3 gap-10">
 
-            {/* Left: content sections */}
-            <div className="lg:col-span-2 space-y-12">
+            {/* Left column */}
+            <div className="lg:col-span-2 space-y-10">
 
-              {/* Description */}
+              {/* 1. Photo gallery */}
+              <SessionGallery sessionName={session.name} />
+
+              {/* 2. Description — right after gallery */}
               {session.description && (
                 <section>
-                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                  <h2 className="text-2xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
                     За тази сесия
                   </h2>
                   <div>
                     {session.description.split("\n\n").map((para, i) => (
-                      <p key={i} className="text-moss leading-relaxed mb-4">{para}</p>
+                      <p key={i} className="text-moss leading-relaxed mb-3">{para}</p>
                     ))}
                   </div>
                 </section>
               )}
 
-              {/* Amenities */}
+              {/* 3. Amenities */}
               <section>
-                <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                <h2 className="text-2xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
                   Удобства и условия
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -207,17 +178,17 @@ export default async function SessionPage({ params }: Props) {
                 </div>
               </section>
 
-              {/* Schedule */}
+              {/* 4. Schedule */}
               {session.schedule && (
                 <SessionSchedule
                   schedule={session.schedule as { days: Array<{ day: number; theme: string; morning: string; afternoon: string; evening: string }> }}
                 />
               )}
 
-              {/* Trainers */}
+              {/* 5. Trainers */}
               {session.trainers.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                  <h2 className="text-2xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
                     Ръководители на лагера
                   </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -249,9 +220,9 @@ export default async function SessionPage({ params }: Props) {
                 </section>
               )}
 
-              {/* Skills */}
+              {/* 6. Skills */}
               <section>
-                <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                <h2 className="text-2xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
                   Какво ще развие детето ви
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -267,10 +238,10 @@ export default async function SessionPage({ params }: Props) {
                 </div>
               </section>
 
-              {/* Testimonials */}
+              {/* 7. Testimonials */}
               {session.testimonials.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                  <h2 className="text-2xl font-light text-forest mb-4" style={{ fontFamily: "var(--font-serif)" }}>
                     Какво казват родителите
                   </h2>
                   <div className="space-y-4">
@@ -294,13 +265,10 @@ export default async function SessionPage({ params }: Props) {
               )}
             </div>
 
-            {/* Right: booking block sticky (mobile: shows below content, desktop: hidden here since shown in hero) */}
+            {/* Right column: booking block sticky (desktop hidden in hero, shown here on scroll; mobile always here) */}
             <div className="lg:col-span-1">
-              <div className="sticky top-24">
-                {/* On mobile show booking block here; on desktop it's in the hero */}
-                <div className="lg:hidden">
-                  <SessionBookingBlock session={session} />
-                </div>
+              <div className="lg:hidden">
+                <SessionBookingBlock session={session} />
               </div>
             </div>
           </div>
