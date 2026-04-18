@@ -55,7 +55,6 @@ export default async function SessionPage({ params }: Props) {
   const isSoldOut = session.status === "SOLD_OUT" || remaining === 0;
   const isConfirmed = session.spotsTaken >= session.confirmedThreshold;
   const earlyBird = session.pricingTiers.find((t) => t.tierType === "EARLY_BIRD");
-  const standard = session.pricingTiers.find((t) => t.tierType === "STANDARD");
 
   const skills = [
     { icon: "💡", name: "Творчество и въображение", desc: "Изразяване чрез множество дисциплини." },
@@ -80,57 +79,92 @@ export default async function SessionPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main>
-        {/* Hero */}
-        <section className="relative pt-28 pb-12 bg-forest overflow-hidden">
-          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-[#f5a623]/8 rounded-full blur-3xl pointer-events-none" />
+      <main className="bg-sand">
+
+        {/* Hero — light, no dark background */}
+        <section className="pt-28 pb-10 border-b border-forest/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl">
-              <Link href="/#sessions" className="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm mb-6 transition-colors">
-                ← Всички програми
-              </Link>
 
-              {isConfirmed && (
-                <div className="inline-flex items-center gap-2 bg-mint border border-teal/30 rounded-full px-4 py-2 mb-4 text-sm text-teal">
-                  ✅ Сесията е потвърдена
-                </div>
-              )}
+            {/* Breadcrumb */}
+            <Link
+              href="/#sessions"
+              className="inline-flex items-center gap-1.5 text-moss/60 hover:text-forest text-sm mb-6 transition-colors"
+            >
+              ← Всички програми
+            </Link>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-white leading-tight mb-3" style={{ fontFamily: "var(--font-serif)" }}>
-                {session.name}
-              </h1>
-              {session.tagline && (
-                <p className="text-teal text-lg mb-5">{session.tagline}</p>
-              )}
-
-              {/* Key details strip */}
-              <div className="flex flex-wrap gap-4 text-sm text-white/70 mb-8">
-                <span className="flex items-center gap-1.5">
-                  📅 {formatDateRange(session.startDate, session.endDate)}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  👶 {session.minAge}–{session.maxAge} години
-                </span>
-                <span className="flex items-center gap-1.5">
-                  📍 Глемпинг Столът, Севлиево
-                </span>
-                {earlyBird && (
-                  <span className="flex items-center gap-1.5 text-teal">
-                    💰 От {formatPrice(earlyBird.price)}
-                  </span>
+            <div className="grid lg:grid-cols-3 gap-10 items-start">
+              {/* Left: title + meta */}
+              <div className="lg:col-span-2">
+                {isConfirmed && (
+                  <div className="inline-flex items-center gap-2 bg-mint border border-teal/30 rounded-full px-4 py-1.5 mb-4 text-sm text-teal font-medium">
+                    ✅ Сесията е потвърдена
+                  </div>
                 )}
+
+                <h1
+                  className="text-4xl sm:text-5xl lg:text-6xl font-light text-forest leading-tight mb-3"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  {session.name}
+                </h1>
+
+                {session.tagline && (
+                  <p className="text-teal text-lg font-medium mb-6">{session.tagline}</p>
+                )}
+
+                {/* Key details */}
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {[
+                    { icon: "📅", text: formatDateRange(session.startDate, session.endDate) },
+                    { icon: "👶", text: `${session.minAge}–${session.maxAge} години` },
+                    { icon: "📍", text: "Глемпинг Столът, Севлиево" },
+                    ...(earlyBird ? [{ icon: "💰", text: `От ${formatPrice(earlyBird.price)}`, highlight: true }] : []),
+                  ].map(({ icon, text, highlight }) => (
+                    <span
+                      key={text}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border",
+                        highlight
+                          ? "bg-mint border-teal/30 text-teal font-semibold"
+                          : "bg-cream border-forest/10 text-moss"
+                      )}
+                    >
+                      {icon} {text}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Availability bar */}
+                <div className="max-w-sm">
+                  <div className="flex items-center justify-between text-xs mb-1.5">
+                    <span className={cn(
+                      "font-semibold",
+                      color === "green" && "text-teal",
+                      color === "yellow" && "text-amber",
+                      color === "red" && "text-ember",
+                    )}>
+                      {isSoldOut ? "Изчерпано" : `🔥 ${remaining} свободни места`}
+                    </span>
+                    <span className="text-moss/50">{label}</span>
+                  </div>
+                  <div className="h-2 bg-forest/10 rounded-full overflow-hidden">
+                    <div
+                      className={cn("h-full rounded-full transition-all",
+                        color === "green" && "bg-sage",
+                        color === "yellow" && "bg-amber",
+                        color === "red" && "bg-ember",
+                      )}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
               </div>
 
-              {/* Progress bar */}
-              <div className="max-w-md">
-                <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className={cn("font-semibold", color === "green" && "text-teal", color === "yellow" && "text-amber", color === "red" && "text-ember")}>
-                    {isSoldOut ? "Изчерпано" : `🔥 ${remaining} свободни места`}
-                  </span>
-                  <span className="text-moss/50">{label}</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div className={cn("h-full rounded-full transition-all", color === "green" && "bg-sage", color === "yellow" && "bg-amber", color === "red" && "bg-ember")} style={{ width: `${pct}%` }} />
+              {/* Right: booking block (visible in hero on desktop) */}
+              <div className="hidden lg:block lg:col-span-1">
+                <div className="sticky top-24">
+                  <SessionBookingBlock session={session} />
                 </div>
               </div>
             </div>
@@ -138,24 +172,31 @@ export default async function SessionPage({ params }: Props) {
         </section>
 
         {/* Main content */}
-        <div className="bg-sand">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid lg:grid-cols-3 gap-10">
-            {/* Left: content */}
+
+            {/* Left: content sections */}
             <div className="lg:col-span-2 space-y-12">
+
               {/* Description */}
-              <section>
-                <h2 className="text-2xl font-semibold text-forest mb-5">За тази сесия</h2>
-                <div className="max-w-none">
-                  {session.description?.split("\n\n").map((para, i) => (
-                    <p key={i} className="text-moss leading-relaxed mb-4">{para}</p>
-                  ))}
-                </div>
-              </section>
+              {session.description && (
+                <section>
+                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                    За тази сесия
+                  </h2>
+                  <div>
+                    {session.description.split("\n\n").map((para, i) => (
+                      <p key={i} className="text-moss leading-relaxed mb-4">{para}</p>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Amenities */}
               <section>
-                <h2 className="text-2xl font-semibold text-forest mb-5">Удобства и условия</h2>
+                <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                  Удобства и условия
+                </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {amenities.map((a) => (
                     <div key={a.label} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-cream border border-forest/10 text-center">
@@ -168,13 +209,17 @@ export default async function SessionPage({ params }: Props) {
 
               {/* Schedule */}
               {session.schedule && (
-                <SessionSchedule schedule={session.schedule as { days: Array<{ day: number; theme: string; morning: string; afternoon: string; evening: string }> }} />
+                <SessionSchedule
+                  schedule={session.schedule as { days: Array<{ day: number; theme: string; morning: string; afternoon: string; evening: string }> }}
+                />
               )}
 
               {/* Trainers */}
               {session.trainers.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-semibold text-forest mb-5">Ръководители на лагера</h2>
+                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                    Ръководители на лагера
+                  </h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {session.trainers.map(({ trainer }) => (
                       <div key={trainer.id} className="p-5 rounded-xl bg-cream border border-forest/10">
@@ -184,7 +229,7 @@ export default async function SessionPage({ params }: Props) {
                           </div>
                           <div>
                             <h4 className="text-forest font-semibold text-sm">{trainer.name}</h4>
-                            <p className="text-teal/80 text-xs">{trainer.title}</p>
+                            <p className="text-teal text-xs">{trainer.title}</p>
                           </div>
                         </div>
                         {trainer.credentials && (
@@ -194,7 +239,7 @@ export default async function SessionPage({ params }: Props) {
                           <p className="text-moss text-xs leading-relaxed mb-2">{trainer.bio}</p>
                         )}
                         {trainer.personalStatement && (
-                          <blockquote className="border-l-2 border-teal/30 pl-3 italic text-moss/50 text-xs">
+                          <blockquote className="border-l-2 border-teal/30 pl-3 italic text-moss/70 text-xs">
                             &ldquo;{trainer.personalStatement}&rdquo;
                           </blockquote>
                         )}
@@ -206,7 +251,9 @@ export default async function SessionPage({ params }: Props) {
 
               {/* Skills */}
               <section>
-                <h2 className="text-2xl font-semibold text-forest mb-5">Какво ще развие детето ви</h2>
+                <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                  Какво ще развие детето ви
+                </h2>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {skills.map((skill) => (
                     <div key={skill.name} className="flex items-start gap-3 p-4 rounded-xl bg-cream border border-forest/10">
@@ -223,13 +270,15 @@ export default async function SessionPage({ params }: Props) {
               {/* Testimonials */}
               {session.testimonials.length > 0 && (
                 <section>
-                  <h2 className="text-2xl font-semibold text-forest mb-5">Какво казват родителите</h2>
+                  <h2 className="text-2xl font-light text-forest mb-5" style={{ fontFamily: "var(--font-serif)" }}>
+                    Какво казват родителите
+                  </h2>
                   <div className="space-y-4">
                     {session.testimonials.map((t) => (
                       <div key={t.id} className="p-5 rounded-xl bg-cream border border-forest/10">
                         <div className="flex gap-0.5 mb-2">
                           {Array.from({ length: t.rating }).map((_, i) => (
-                            <span key={i} className="text-teal text-xs">★</span>
+                            <span key={i} className="text-gold text-sm">★</span>
                           ))}
                         </div>
                         <p className="text-forest/80 text-sm leading-relaxed mb-3">&ldquo;{t.quote}&rdquo;</p>
@@ -245,15 +294,18 @@ export default async function SessionPage({ params }: Props) {
               )}
             </div>
 
-            {/* Right: sticky booking block */}
+            {/* Right: booking block sticky (mobile: shows below content, desktop: hidden here since shown in hero) */}
             <div className="lg:col-span-1">
               <div className="sticky top-24">
-                <SessionBookingBlock session={session} />
+                {/* On mobile show booking block here; on desktop it's in the hero */}
+                <div className="lg:hidden">
+                  <SessionBookingBlock session={session} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
+
       </main>
       <Footer />
       <StickyCtaBar spotsLeft={remaining} sessionSlug={session.slug} />
