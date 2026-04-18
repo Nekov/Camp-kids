@@ -31,7 +31,7 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-forest/95 backdrop-blur-md shadow-lg border-b border-white/10"
-          : "bg-transparent"
+          : "bg-sand/80 backdrop-blur-sm border-b border-forest/8"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 lg:h-20">
@@ -40,21 +40,21 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-forest font-bold text-sm">
             М
           </div>
-          <span className="font-semibold text-white text-sm sm:text-base leading-tight">
+          <span className={`font-semibold text-sm sm:text-base leading-tight transition-colors ${scrolled ? "text-white" : "text-forest"}`}>
             Мечта в джоба
           </span>
         </Link>
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="text-white/80 hover:text-white transition-colors">
+          <Link href="/" className={`hover:text-teal transition-colors ${scrolled ? "text-white/80" : "text-forest/70 hover:text-forest"}`}>
             Начало
           </Link>
 
           {/* Programs dropdown */}
           <div className="relative">
             <button
-              className="flex items-center gap-1 text-white/80 hover:text-white transition-colors"
+              className={`flex items-center gap-1 hover:text-teal transition-colors ${scrolled ? "text-white/80" : "text-forest/70 hover:text-forest"}`}
               onMouseEnter={() => setProgramsOpen(true)}
               onMouseLeave={() => setProgramsOpen(false)}
             >
@@ -82,13 +82,13 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="/about" className="text-white/80 hover:text-white transition-colors">
+          <Link href="/about" className={`hover:text-teal transition-colors ${scrolled ? "text-white/80" : "text-forest/70 hover:text-forest"}`}>
             За нас
           </Link>
-          <Link href="/location" className="text-white/80 hover:text-white transition-colors">
+          <Link href="/location" className={`hover:text-teal transition-colors ${scrolled ? "text-white/80" : "text-forest/70 hover:text-forest"}`}>
             Локацията
           </Link>
-          <Link href="/faq" className="text-white/80 hover:text-white transition-colors">
+          <Link href="/faq" className={`hover:text-teal transition-colors ${scrolled ? "text-white/80" : "text-forest/70 hover:text-forest"}`}>
             Въпроси
           </Link>
         </div>
@@ -97,13 +97,13 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           <a
             href="tel:+359885571638"
-            className="text-white/70 hover:text-white text-sm transition-colors"
+            className={`text-sm transition-colors ${scrolled ? "text-white/70 hover:text-white" : "text-moss hover:text-forest"}`}
           >
             0885 571 638
           </a>
           <Link
             href="/programs/session-1"
-            className="bg-teal hover:bg-teal-dark text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg"
+            className={`font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 ${scrolled ? "bg-teal hover:bg-teal-dark text-white shadow-lg" : "text-forest border border-forest/30 hover:bg-forest/5"}`}
           >
             Запишете дете →
           </Link>
