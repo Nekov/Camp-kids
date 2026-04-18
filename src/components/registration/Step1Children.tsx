@@ -78,22 +78,22 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="bg-cream rounded-2xl border border-forest/10 p-6">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-bold text-base">Данни за детето/децата</h2>
+          <h2 className="text-forest font-bold text-base">Данни за детето/децата</h2>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => removeChild(children.length - 1)}
               disabled={children.length <= 1}
-              className="w-8 h-8 rounded-full bg-forest/8 hover:bg-forest/15 disabled:opacity-30 flex items-center justify-center text-white transition-all"
+              className="w-8 h-8 rounded-full bg-forest/10 hover:bg-forest/20 disabled:opacity-30 flex items-center justify-center text-forest transition-all"
             >
               <Minus className="w-3.5 h-3.5" />
             </button>
-            <span className="text-white font-bold text-sm w-4 text-center">{childCount}</span>
+            <span className="text-forest font-bold text-sm w-4 text-center">{childCount}</span>
             <button
               type="button"
               onClick={addChild}
               disabled={children.length >= 5}
-              className="w-8 h-8 rounded-full bg-forest/8 hover:bg-forest/15 disabled:opacity-30 flex items-center justify-center text-white transition-all"
+              className="w-8 h-8 rounded-full bg-forest/10 hover:bg-forest/20 disabled:opacity-30 flex items-center justify-center text-forest transition-all"
             >
               <Plus className="w-3.5 h-3.5" />
             </button>
@@ -121,7 +121,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
                     required
                     value={child.firstName}
                     onChange={(e) => updateChild(i, "firstName", e.target.value)}
-                    className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+                    className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
                     placeholder="Иван"
                   />
                 </div>
@@ -131,7 +131,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
                     required
                     value={child.lastName}
                     onChange={(e) => updateChild(i, "lastName", e.target.value)}
-                    className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+                    className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
                     placeholder="Иванов"
                   />
                 </div>
@@ -153,7 +153,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
                 <input
                   value={child.dietaryNotes}
                   onChange={(e) => updateChild(i, "dietaryNotes", e.target.value)}
-                  className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+                  className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
                   placeholder="Напр. вегетарианско, алергия към ядки"
                 />
               </div>
@@ -163,7 +163,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
                 <input
                   value={child.medicalNotes}
                   onChange={(e) => updateChild(i, "medicalNotes", e.target.value)}
-                  className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+                  className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
                   placeholder="Неща, за които трябва да знаем"
                 />
               </div>
@@ -172,7 +172,7 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
         </div>
 
         {childCount >= 2 && (
-          <div className="mt-4 p-3 rounded-lg bg-teal/20 border border-[#2d6a2f]/30 text-emerald-400 text-xs">
+          <div className="mt-4 p-3 rounded-lg bg-mint border border-teal/30 text-teal text-xs">
             🎉 Отстъпка 6% за второто дете автоматично приложена!
           </div>
         )}
@@ -180,25 +180,25 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
 
       {/* Promo code */}
       <div className="bg-cream rounded-2xl border border-forest/10 p-5">
-        <h3 className="text-white/70 text-sm font-medium mb-3">Промо код (по желание)</h3>
+        <h3 className="text-moss text-sm font-medium mb-3">Промо код (по желание)</h3>
         <div className="flex gap-2">
           <input
             value={promoCode}
             onChange={(e) => { setPromoCode(e.target.value.toUpperCase()); setPromoResult(null); }}
-            className="flex-1 bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all uppercase"
+            className="flex-1 bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all uppercase"
             placeholder="SUMMER10"
           />
           <button
             type="button"
             onClick={validatePromo}
             disabled={!promoCode || promoLoading}
-            className="px-4 py-2.5 bg-forest/8 hover:bg-forest/15 disabled:opacity-40 text-white text-sm font-medium rounded-xl transition-all"
+            className="px-4 py-2.5 bg-forest/10 hover:bg-forest/20 disabled:opacity-40 text-forest text-sm font-medium rounded-xl transition-all"
           >
             {promoLoading ? "..." : "Приложи"}
           </button>
         </div>
         {promoResult && (
-          <p className={`mt-2 text-xs ${promoResult.valid ? "text-emerald-400" : "text-red-400"}`}>
+          <p className={`mt-2 text-xs ${promoResult.valid ? "text-teal" : "text-ember"}`}>
             {promoResult.valid ? `✓ ${promoResult.label} приложено` : `✗ ${promoResult.error}`}
           </p>
         )}
@@ -210,25 +210,25 @@ export default function Step1Children({ session, onNext, loading }: Step1Childre
           <span className="text-moss text-sm">
             {childCount} {childCount === 1 ? "дете" : "деца"} × {formatPrice(basePrice)}
           </span>
-          <span className="text-white font-semibold">{formatPrice(totalBeforePromo)}</span>
+          <span className="text-forest font-semibold">{formatPrice(totalBeforePromo)}</span>
         </div>
         {childCount >= 2 && (
-          <div className="flex items-center justify-between text-xs text-emerald-400 mb-2">
+          <div className="flex items-center justify-between text-xs text-teal mb-2">
             <span>Отстъпка за второ дете (6%)</span>
             <span>-{formatPrice(basePrice * 0.06)}</span>
           </div>
         )}
         <div className="border-t border-forest/10 pt-2 flex items-center justify-between">
-          <span className="text-white font-semibold">Обща сума</span>
+          <span className="text-forest font-semibold">Обща сума</span>
           <span className="text-teal font-bold text-lg">{formatPrice(totalBeforePromo)}</span>
         </div>
-        <p className="text-white/30 text-xs mt-2">Депозит €200 за потвърждение на място</p>
+        <p className="text-moss/50 text-xs mt-2">Депозит €200 за потвърждение на място</p>
       </div>
 
       <button
         type="submit"
         disabled={!isValid || loading}
-        className="w-full bg-teal hover:bg-[#f7b84a] disabled:opacity-50 text-forest font-bold py-4 rounded-xl transition-all text-sm"
+        className="w-full bg-teal hover:bg-teal-dark disabled:opacity-50 text-white font-bold py-4 rounded-xl transition-all text-sm"
       >
         {loading ? "Зареждане..." : "Продължи →"}
       </button>

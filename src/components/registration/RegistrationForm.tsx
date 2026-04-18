@@ -136,7 +136,7 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">Записване</h1>
+        <h1 className="text-2xl font-bold text-forest mb-1">Записване</h1>
         <p className="text-moss text-sm">{session.name}</p>
         <p className="text-moss/60 text-xs">
           {formatDateRange(session.startDate, session.endDate)} • {session.minAge}–{session.maxAge} г.
@@ -155,14 +155,14 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
                   s < step
                     ? "bg-teal text-white"
                     : s === step
-                    ? "bg-teal text-forest"
-                    : "bg-forest/8 text-moss/60"
+                    ? "bg-teal text-white"
+                    : "bg-forest/10 text-moss/60"
                 }`}
               >
                 {s < step ? "✓" : s}
               </div>
               {i < totalSteps - 1 && (
-                <div className={`flex-1 h-0.5 w-12 ${s < step ? "bg-teal" : "bg-forest/8"}`} />
+                <div className={`flex-1 h-0.5 w-12 ${s < step ? "bg-teal" : "bg-forest/15"}`} />
               )}
             </div>
           );

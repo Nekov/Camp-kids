@@ -36,7 +36,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="bg-cream rounded-2xl border border-forest/10 p-6 space-y-4">
-        <h2 className="text-white font-bold text-base mb-1">Данни за родителя / настойника</h2>
+        <h2 className="text-forest font-bold text-base mb-1">Данни за родителя / настойника</h2>
 
         <div>
           <label className="block text-moss text-xs mb-1.5">Пълно име *</label>
@@ -44,7 +44,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
             required
             value={parentName}
             onChange={(e) => setParentName(e.target.value)}
-            className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+            className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
             placeholder="Иван Иванов"
           />
         </div>
@@ -56,7 +56,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+            className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
             placeholder="ivan@example.com"
           />
         </div>
@@ -68,7 +68,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
             required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
+            className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all"
             placeholder="+359 888 123 456"
           />
         </div>
@@ -79,7 +79,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
             rows={2}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all resize-none"
+            className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm placeholder-moss/40 focus:outline-none focus:border-teal/50 transition-all resize-none"
             placeholder="Допълнителна информация"
           />
         </div>
@@ -89,7 +89,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
           <select
             value={attribution}
             onChange={(e) => setAttribution(e.target.value)}
-            className="w-full bg-sand border border-forest/15 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-teal/50 transition-all"
+            className="w-full bg-linen border border-forest/15 rounded-xl px-3 py-2.5 text-forest text-sm focus:outline-none focus:border-teal/50 transition-all"
           >
             <option value="">Изберете</option>
             <option value="facebook">Facebook</option>
@@ -123,7 +123,7 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
 
       {/* Price summary reminder */}
       {totalAmount && (
-        <div className="bg-[#1e3a52]/30 rounded-xl border border-forest/10 p-4 flex items-center justify-between">
+        <div className="bg-mint rounded-xl border border-teal/20 p-4 flex items-center justify-between">
           <span className="text-moss text-sm">Обща сума</span>
           <span className="text-teal font-bold text-lg">{formatPrice(totalAmount)}</span>
         </div>
@@ -133,14 +133,14 @@ export default function Step2Parent({ onNext, onBack, loading, isFlowB, totalAmo
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 bg-forest/8 hover:bg-white/15 text-white/70 font-medium rounded-xl text-sm transition-all"
+          className="px-5 py-3 bg-forest/8 hover:bg-forest/15 text-moss font-medium rounded-xl text-sm transition-all"
         >
           ← Назад
         </button>
         <button
           type="submit"
           disabled={!isValid || loading}
-          className="flex-1 bg-teal hover:bg-[#f7b84a] disabled:opacity-50 text-forest font-bold py-3 rounded-xl transition-all text-sm"
+          className="flex-1 bg-teal hover:bg-teal-dark disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-all text-sm"
         >
           {loading
             ? "Зареждане..."
