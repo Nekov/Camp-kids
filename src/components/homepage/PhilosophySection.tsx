@@ -27,17 +27,17 @@ const pillars = [
 
 export default function PhilosophySection() {
   return (
-    <section className="py-24 bg-[#0d1b2a]">
+    <section className="py-24 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mb-16">
-          <span className="text-[#f5a623] text-sm font-semibold uppercase tracking-widest">
+          <span className="text-teal text-sm font-semibold uppercase tracking-widest">
             Нашата философия
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-light text-forest leading-tight" style={{ fontFamily: "var(--font-serif)" }}>
             Децата умеят да създават.{" "}
-            <span className="text-[#f5a623]">Ние им правим терена.</span>
+            <em className="text-teal not-italic">Ние им правим терена.</em>
           </h2>
-          <p className="mt-5 text-white/60 text-base leading-relaxed">
+          <p className="mt-5 text-moss text-base leading-relaxed">
             Не сме просто лагер. Сме творческа среда, проектирана да активира потенциала
             на всяко дете чрез четири фундаментални принципа.
           </p>
@@ -47,26 +47,26 @@ export default function PhilosophySection() {
           {pillars.map((p) => (
             <div
               key={p.title}
-              className="group p-6 rounded-2xl bg-[#1e3a52]/50 border border-white/10 hover:border-[#f5a623]/30 hover:bg-[#1e3a52]/80 transition-all duration-300"
+              className="group p-6 rounded-2xl bg-linen border border-forest/10 hover:border-teal/30 hover:shadow-md transition-all duration-300"
             >
               <div className="text-4xl mb-4">{p.icon}</div>
-              <h3 className="text-white font-bold text-lg mb-1 group-hover:text-[#f5a623] transition-colors">
+              <h3 className="text-forest font-semibold text-lg mb-1 group-hover:text-teal transition-colors">
                 {p.title}
               </h3>
-              <p className="text-[#f5a623]/70 text-xs font-medium mb-3 italic">
+              <p className="text-teal text-xs font-medium mb-3 italic">
                 {p.subtitle}
               </p>
-              <p className="text-white/60 text-sm leading-relaxed">{p.body}</p>
+              <p className="text-moss text-sm leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 p-6 rounded-2xl bg-[#1e3a52]/30 border border-white/10">
-          <p className="text-white/70 text-base leading-relaxed text-center italic max-w-3xl mx-auto">
+        <div className="mt-12 p-6 rounded-2xl bg-mint border border-teal/20">
+          <p className="text-fern text-base leading-relaxed text-center italic max-w-3xl mx-auto">
             „Вдъхновени от философията на Buck&apos;s Rock — целта не е перфектният резултат.
             Целта е откривателят, не откритието. Процесът е продуктът."
           </p>
-          <p className="text-center text-white/40 text-sm mt-3">
+          <p className="text-center text-moss text-sm mt-3">
             — Фондация „Мечта в джоба"
           </p>
         </div>

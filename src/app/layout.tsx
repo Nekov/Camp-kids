@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -39,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bg" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
-      <body className="min-h-full bg-[#12253a] text-white" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
+    <html lang="bg" className={`${dmSans.variable} ${cormorant.variable} h-full antialiased`}>
+      <body className="min-h-full bg-sand text-forest" style={{ fontFamily: "var(--font-sans), system-ui, sans-serif" }}>
         {children}
       </body>
     </html>

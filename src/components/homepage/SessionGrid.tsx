@@ -10,16 +10,16 @@ export default async function SessionGrid() {
   });
 
   return (
-    <section id="sessions" className="py-20 bg-[#12253a]">
+    <section id="sessions" className="py-20 bg-sand">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
-          <span className="text-[#f5a623] text-sm font-semibold uppercase tracking-widest">
+          <span className="text-teal text-sm font-semibold uppercase tracking-widest">
             Програми 2026
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-light text-forest" style={{ fontFamily: "var(--font-serif)" }}>
             Избери своята сесия
           </h2>
-          <p className="mt-4 text-white/60 max-w-2xl mx-auto text-base leading-relaxed">
+          <p className="mt-4 text-moss max-w-2xl mx-auto text-base leading-relaxed">
             Шест сесии с различни теми и възрастови групи. Всяко място е ограничено —
             максимум 28 деца на сесия.
           </p>
@@ -34,7 +34,7 @@ export default async function SessionGrid() {
         <div className="text-center mt-10">
           <Link
             href="/programs/session-1"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm border border-white/20 hover:border-white/40 px-6 py-3 rounded-full transition-all"
+            className="inline-flex items-center gap-2 text-moss hover:text-forest text-sm border border-forest/20 hover:border-forest/40 px-6 py-3 rounded-full transition-all"
           >
             Виж пълните описания на всички програми →
           </Link>

@@ -30,17 +30,17 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-[#0d1b2a]/95 backdrop-blur-md shadow-lg border-b border-white/10"
+          ? "bg-forest/95 backdrop-blur-md shadow-lg border-b border-white/10"
           : "bg-transparent"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 lg:h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-full bg-[#f5a623] flex items-center justify-center text-[#0d1b2a] font-bold text-sm">
+          <div className="w-8 h-8 rounded-full bg-gold flex items-center justify-center text-forest font-bold text-sm">
             М
           </div>
-          <span className="font-bold text-white text-sm sm:text-base leading-tight">
+          <span className="font-semibold text-white text-sm sm:text-base leading-tight">
             Мечта в джоба
           </span>
         </Link>
@@ -66,7 +66,7 @@ export default function Navbar() {
                 onMouseEnter={() => setProgramsOpen(true)}
                 onMouseLeave={() => setProgramsOpen(false)}
               >
-                <div className="bg-[#1e3a52] rounded-xl border border-white/10 overflow-hidden shadow-xl">
+                <div className="bg-forest rounded-xl border border-white/10 overflow-hidden shadow-xl">
                   {sessions.map((s) => (
                     <Link
                       key={s.slug}
@@ -74,7 +74,7 @@ export default function Navbar() {
                       className="flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
                     >
                       <span className="text-white/90 text-sm">{s.name}</span>
-                      <span className="text-[#f5a623] text-xs">{s.ages}</span>
+                      <span className="text-gold text-xs">{s.ages}</span>
                     </Link>
                   ))}
                 </div>
@@ -103,7 +103,7 @@ export default function Navbar() {
           </a>
           <Link
             href="/programs/session-1"
-            className="bg-[#f5a623] hover:bg-[#f7b84a] text-[#0d1b2a] font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-amber-500/25"
+            className="bg-teal hover:bg-teal-dark text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg"
           >
             Запишете дете →
           </Link>
@@ -121,7 +121,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-[#0d1b2a]/98 backdrop-blur-md border-t border-white/10">
+        <div className="lg:hidden bg-forest/98 backdrop-blur-md border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <Link href="/" className="block py-3 text-white/80 border-b border-white/5" onClick={() => setMobileOpen(false)}>
               Начало
@@ -135,7 +135,7 @@ export default function Navbar() {
                 <ChevronDown className={cn("w-4 h-4 transition-transform", programsOpen && "rotate-180")} />
               </button>
               {programsOpen && (
-                <div className="bg-[#1e3a52]/50 rounded-lg my-2 overflow-hidden">
+                <div className="bg-forest-mid/50 rounded-lg my-2 overflow-hidden">
                   {sessions.map((s) => (
                     <Link
                       key={s.slug}
@@ -144,7 +144,7 @@ export default function Navbar() {
                       onClick={() => setMobileOpen(false)}
                     >
                       <span>{s.name}</span>
-                      <span className="text-[#f5a623] text-xs">{s.ages}</span>
+                      <span className="text-gold text-xs">{s.ages}</span>
                     </Link>
                   ))}
                 </div>
@@ -159,7 +159,7 @@ export default function Navbar() {
               </a>
               <Link
                 href="/programs/session-1"
-                className="block text-center bg-[#f5a623] text-[#0d1b2a] font-semibold py-3 rounded-full"
+                className="block text-center bg-teal text-white font-semibold py-3 rounded-full"
                 onClick={() => setMobileOpen(false)}
               >
                 Запишете дете →

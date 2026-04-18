@@ -1,48 +1,49 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500&display=swap");
 
 @theme {
-  /* Summer Night Palette */
-  --color-navy-950: #0a1628;
-  --color-navy-900: #12253a;
-  --color-navy-800: #1e3a52;
-  --color-navy-700: #254d6e;
+  /* ── Starlit Forest / Summer Night Palette ── */
 
-  --color-amber-500: #f5a623;
-  --color-amber-400: #f7b84a;
-  --color-amber-600: #d4890a;
+  /* Darks (hero, footer, night blocks) */
+  --color-night:        #0D1F15;
+  --color-forest:       #1D3D2A;
+  --color-forest-mid:   #2C5438;
+  --color-fern:         #3A6B4A;
+  --color-moss:         #5A8F6A;
 
-  --color-forest-700: #2d6a2f;
-  --color-forest-600: #3a8a3c;
-  --color-forest-500: #4cad4e;
+  /* Accent */
+  --color-teal:         #5B9B8A;
+  --color-teal-dark:    #4A8878;
 
-  --color-cream: #f8f4ec;
-  --color-muted-blue: #a8b8c8;
-  --color-near-black: #0d1b2a;
+  /* Highlight */
+  --color-gold:         #F5C87A;
+  --color-ember:        #D4763A;
+  --color-amber:        #E8860A;
 
-  --color-warning: #e8a020;
-  --color-danger: #c0392b;
-  --color-sold-out: #6b7280;
+  /* Lights (page bg, cards) */
+  --color-sand:         #F7EDD8;
+  --color-cream:        #FAF7F0;
+  --color-linen:        #FDF6EC;
+  --color-mint:         #E8F7F2;
+
+  /* Decorative only — never for readable text */
+  --color-sage:         #9FBF9A;
 
   /* Fonts */
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif:   "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "DM Sans", system-ui, sans-serif;
 
-  /* Spacing/sizing */
   --radius: 0.75rem;
 }
 
 :root {
-  --background: #12253a;
-  --foreground: #ffffff;
+  --background: #F7EDD8;
+  --foreground: #1D3D2A;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--background);
@@ -53,5 +54,5 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #12253a; }
-::-webkit-scrollbar-thumb { background: #f5a623; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #F7EDD8; }
+::-webkit-scrollbar-thumb { background: #5B9B8A; border-radius: 3px; }

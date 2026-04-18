@@ -30,12 +30,12 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#12253a] to-[#0d2040]" />
-      {/* Decorative glow */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#f5a623]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/3 left-1/4 w-64 h-64 bg-[#2d6a2f]/15 rounded-full blur-3xl pointer-events-none" />
-      {/* Stars effect */}
+      {/* Background — Night */}
+      <div className="absolute inset-0 bg-gradient-to-br from-night via-forest to-[#0d2515]" />
+      {/* Decorative glows */}
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-teal/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/3 left-1/4 w-64 h-64 bg-forest-mid/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Stars */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {stars.map((star, i) => (
           <div
@@ -54,9 +54,9 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 pb-16">
         {/* Urgency banner */}
         {!countdown.expired && (
-          <div className="inline-flex items-center gap-3 bg-[#f5a623]/15 border border-[#f5a623]/30 rounded-full px-4 py-2 mb-8 text-sm">
-            <span className="w-2 h-2 bg-[#f5a623] rounded-full animate-pulse" />
-            <span className="text-[#f5a623] font-semibold">Ранна цена изтича след:</span>
+          <div className="inline-flex items-center gap-3 bg-amber/10 border border-amber/30 rounded-full px-4 py-2 mb-8 text-sm">
+            <span className="w-2 h-2 bg-amber rounded-full animate-pulse" />
+            <span className="text-amber font-semibold">Ранна цена изтича след:</span>
             <span className="text-white font-mono font-bold">
               {countdown.days}д {String(countdown.hours).padStart(2, "0")}ч {String(countdown.minutes).padStart(2, "0")}м
             </span>
@@ -64,9 +64,12 @@ export default function HeroSection() {
         )}
 
         <div className="max-w-3xl">
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+          <h1
+            className="text-4xl sm:text-5xl lg:text-7xl font-light text-white leading-tight mb-6"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
             Седмица,{" "}
-            <span className="text-[#f5a623]">която ще помнят</span>{" "}
+            <em className="text-gold not-italic">която ще помнят</em>{" "}
             завинаги.
           </h1>
           <p className="text-lg sm:text-xl text-white/70 mb-3 leading-relaxed">
@@ -81,10 +84,9 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <a
               href="#sessions"
-              className="inline-flex items-center justify-center gap-2 bg-[#f5a623] hover:bg-[#f7b84a] text-[#0d1b2a] font-bold px-8 py-4 rounded-full text-base transition-all duration-200 shadow-lg hover:shadow-amber-500/30 hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 bg-teal hover:bg-teal-dark text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200 shadow-lg hover:-translate-y-0.5"
             >
-              Виж програмите
-              <span>↓</span>
+              Виж програмите ↓
             </a>
             <Link
               href="/register/session-1"
@@ -100,7 +102,7 @@ export default function HeroSection() {
               {["Д", "И", "М", "Е", "Т"].map((letter, i) => (
                 <div
                   key={i}
-                  className="w-7 h-7 rounded-full bg-gradient-to-br from-[#f5a623] to-[#d4890a] flex items-center justify-center text-[#0d1b2a] text-xs font-bold border-2 border-[#12253a]"
+                  className="w-7 h-7 rounded-full bg-gradient-to-br from-gold to-teal flex items-center justify-center text-forest text-xs font-bold border-2 border-night"
                 >
                   {letter}
                 </div>
@@ -113,29 +115,24 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Trust badge strip */}
+      {/* Trust strip */}
       <div className="relative z-10 border-t border-white/10 bg-white/5 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-white/50">
-            <span className="flex items-center gap-1.5">
-              <span className="text-[#f5a623]">✦</span> Фондация „Мечта в джоба"
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/20" />
-            <span className="flex items-center gap-1.5">
-              <span className="text-[#f5a623]">✦</span> 8+ години опит
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/20" />
-            <span className="flex items-center gap-1.5">
-              <span className="text-[#f5a623]">✦</span> Глемпинг Столът, Севлиево
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/20" />
-            <span className="flex items-center gap-1.5">
-              <span className="text-[#f5a623]">✦</span> 1:6 ратио деца/педагог
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/20" />
-            <span className="flex items-center gap-1.5">
-              <span className="text-[#f5a623]">✦</span> Магистри педагози
-            </span>
+            {[
+              'Фондация \u201eМечта в джоба\u201c',
+              "8+ години опит",
+              "Глемпинг Столът, Севлиево",
+              "1:6 ратио деца/педагог",
+              "Магистри педагози",
+            ].map((item, i, arr) => (
+              <span key={item} className="flex items-center gap-3">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-teal">✦</span> {item}
+                </span>
+                {i < arr.length - 1 && <span className="hidden sm:block w-px h-4 bg-white/20" />}
+              </span>
+            ))}
           </div>
         </div>
       </div>
