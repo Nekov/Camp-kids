@@ -80,13 +80,23 @@ export default async function SessionPage({ params }: Props) {
       <Navbar />
       <main className="bg-sand">
 
-        {/* ── Hero: compact, no progress bar ── */}
-        <section className="pt-24 pb-8 border-b border-forest/8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <Link href="/#sessions" className="inline-flex items-center gap-1.5 text-moss/60 hover:text-forest text-sm mb-5 transition-colors">
+        {/* ── Gallery: full width, above everything ── */}
+        <div className="pt-20">
+          {/* Back link */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-3">
+            <Link href="/#sessions" className="inline-flex items-center gap-1.5 text-moss/60 hover:text-forest text-sm transition-colors">
               ← Всички програми
             </Link>
+          </div>
+          {/* Gallery bleeds to edges on mobile, padded on desktop */}
+          <div className="px-4 sm:px-6 lg:px-8">
+            <SessionGallery sessionName={session.name} />
+          </div>
+        </div>
 
+        {/* ── Hero: title + meta below gallery ── */}
+        <section className="py-8 border-b border-forest/8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="grid lg:grid-cols-3 gap-10 items-start">
               <div className="lg:col-span-2">
                 {isConfirmed && (
@@ -129,7 +139,7 @@ export default async function SessionPage({ params }: Props) {
                 </div>
               </div>
 
-              {/* Booking block in hero on desktop */}
+              {/* Booking block — desktop */}
               <div className="hidden lg:block lg:col-span-1">
                 <div className="sticky top-24">
                   <SessionBookingBlock session={session} />
@@ -145,9 +155,6 @@ export default async function SessionPage({ params }: Props) {
 
             {/* Left column */}
             <div className="lg:col-span-2 space-y-10">
-
-              {/* 1. Photo gallery */}
-              <SessionGallery sessionName={session.name} />
 
               {/* 2. Description — right after gallery */}
               {session.description && (
