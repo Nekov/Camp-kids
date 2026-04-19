@@ -21,7 +21,7 @@ export default async function SessionGrid() {
           </h2>
           <p className="mt-4 text-moss max-w-2xl mx-auto text-base leading-relaxed">
             Шест сесии с различни теми и възрастови групи. Всяко място е ограничено —
-            максимум 28 деца на сесия.
+            максимум 30 деца на сесия.
           </p>
         </div>
 

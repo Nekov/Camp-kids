@@ -18,7 +18,7 @@ export default function UspStrip() {
     {
       icon: "👨‍👩‍👧‍👦",
       title: "Малки групи",
-      desc: "Максимум 28 деца, ратио 1:6",
+      desc: "Максимум 30 деца, ратио 1:6",
     },
     {
       icon: "✨",

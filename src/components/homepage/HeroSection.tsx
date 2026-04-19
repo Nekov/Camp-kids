@@ -43,8 +43,8 @@ export default function HeroSection() {
 
             <p className="text-moss text-lg leading-relaxed mb-10 max-w-md">
               Творчески лагери сред природата на Глемпинг Столът,
-              Севлиево. Деца 7–18 г. От €650 за седмица. Максимум 28
-              деца на сесия.
+              Севлиево. Деца 7–18 г. От €650 за седмица. Над 280 доволни
+              участника от миналите издания.
             </p>
 
             {/* Countdown pill */}
@@ -107,9 +107,9 @@ export default function HeroSection() {
 
             {/* Stat card */}
             <div className="absolute left-0 top-[20%] w-[42%] bg-cream rounded-2xl shadow-lg border border-forest/8 p-5 z-10">
-              <p className="text-teal text-xs font-semibold uppercase tracking-widest mb-2">Деца на сесия</p>
-              <p className="text-forest text-5xl font-light mb-1" style={{ fontFamily: "var(--font-serif)" }}>28</p>
-              <p className="text-moss text-sm">Малки групи, голямо внимание</p>
+              <p className="text-teal text-xs font-semibold uppercase tracking-widest mb-2">Доволни участника</p>
+              <p className="text-forest text-5xl font-light mb-1" style={{ fontFamily: "var(--font-serif)" }}>280+</p>
+              <p className="text-moss text-sm">От миналите издания</p>
             </div>
 
             {/* Bottom left — landscape */}
