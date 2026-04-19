@@ -10,7 +10,7 @@ export const authConfig: NextAuthConfig = {
       const isAuthenticated = !!auth?.user;
 
       if (isAdminRoute && !isLoginPage && !isAuthenticated) {
-        return false;
+        return Response.redirect(new URL("/admin/login", request.url));
       }
       return true;
     },

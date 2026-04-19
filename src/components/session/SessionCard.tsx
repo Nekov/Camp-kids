@@ -77,12 +77,21 @@ export default function SessionCard({ session }: SessionCardProps) {
         </div>
       )}
 
-      {/* Image placeholder */}
-      <div className="h-36 bg-gradient-to-br from-forest/20 to-teal/10 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">
-          🎨
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-cream to-transparent" />
+      {/* Cover image */}
+      <div className="h-44 relative overflow-hidden bg-gradient-to-br from-forest/20 to-teal/10">
+        {session.photoUrls?.[0] ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={session.photoUrls[0]}
+            alt={session.name}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20">
+            🎨
+          </div>
+        )}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-cream to-transparent" />
       </div>
 
       <div className="flex flex-col flex-1 p-5 gap-4">
