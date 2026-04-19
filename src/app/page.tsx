@@ -23,8 +23,8 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <UspStrip />
-        <SessionGrid />
         <PhilosophySection />
+        <SessionGrid />
         <SkillsSection />
         <ExperienceZones />
         <OrganizersSection />
