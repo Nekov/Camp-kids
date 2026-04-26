@@ -103,8 +103,12 @@ export default function SessionCard({ session }: SessionCardProps) {
               {session.minAge}–{session.maxAge} г.
             </span>
           </div>
-          <p className="text-moss text-xs">{formatDateRange(session.startDate, session.endDate)}</p>
-          <p className="text-moss/60 text-xs">📍 Глемпинг Столът, Севлиево</p>
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 bg-forest/8 border border-forest/15 text-forest text-xs font-semibold px-2.5 py-1 rounded-full">
+              📅 {formatDateRange(session.startDate, session.endDate)}
+            </span>
+          </div>
+          <p className="text-moss/60 text-xs mt-1">📍 Глемпинг Столът, Севлиево</p>
         </div>
 
         {/* Progress */}
