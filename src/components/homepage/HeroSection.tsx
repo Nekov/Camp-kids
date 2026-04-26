@@ -94,15 +94,10 @@ export default function HeroSection() {
 
           {/* Right: Photo collage */}
           <div className="relative hidden lg:block h-[540px]">
-            {/* Main large image — top right */}
-            <div className="absolute right-0 top-0 w-[58%] h-[56%] rounded-2xl bg-forest overflow-hidden shadow-xl">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/30">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span className="text-xs text-center px-4">Снимки на деца в<br />творческа дейност</span>
-              </div>
+            {/* Main large image — top right: aerial glamping */}
+            <div className="absolute right-0 top-0 w-[58%] h-[56%] rounded-2xl overflow-hidden shadow-xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/glamping-aerial.jpg" alt="Глемпинг Столът" className="absolute inset-0 w-full h-full object-cover" />
             </div>
 
             {/* Stat card */}
@@ -112,18 +107,17 @@ export default function HeroSection() {
               <p className="text-moss text-sm">От миналите издания</p>
             </div>
 
-            {/* Bottom left — landscape */}
-            <div className="absolute left-0 bottom-0 w-[48%] h-[40%] rounded-2xl bg-forest-mid overflow-hidden shadow-lg">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/30">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span className="text-xs">Глемпинг</span>
-              </div>
+            {/* Bottom left — kids painting */}
+            <div className="absolute left-0 bottom-0 w-[48%] h-[40%] rounded-2xl overflow-hidden shadow-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/kids-painting.jpeg" alt="Деца рисуват" className="absolute inset-0 w-full h-full object-cover" />
             </div>
 
-            {/* Bottom right — accent */}
-            <div className="absolute right-0 bottom-0 w-[46%] h-[38%] rounded-2xl bg-sage/60 overflow-hidden shadow-lg border border-sage" />
+            {/* Bottom right — fireplace */}
+            <div className="absolute right-0 bottom-0 w-[46%] h-[38%] rounded-2xl overflow-hidden shadow-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/fireplace.jpg" alt="Лагерен огън" className="absolute inset-0 w-full h-full object-cover" />
+            </div>
           </div>
 
         </div>

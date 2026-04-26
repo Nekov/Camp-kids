@@ -31,19 +31,22 @@ export default function LocationPage() {
     <>
       <Navbar />
       <main className="bg-sand min-h-screen">
-        {/* Hero */}
-        <section className="pt-28 pb-16 bg-cream border-b border-forest/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-px bg-teal" />
-              <span className="text-teal text-xs font-semibold uppercase tracking-widest">Локацията</span>
-            </div>
-            <h1 className="text-3xl sm:text-5xl font-light text-forest leading-tight mb-4" style={{ fontFamily: "var(--font-serif)" }}>
+        {/* Hero — full-width aerial photo */}
+        <section className="relative w-full" style={{ height: "clamp(340px, 50vw, 580px)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/glamping-aerial.jpg"
+            alt="Глемпинг Столът — изглед от въздуха"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-forest/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 pb-10 px-4 sm:px-8 max-w-4xl mx-auto w-full">
+            <span className="text-teal text-xs font-semibold uppercase tracking-widest mb-2 block">Локацията</span>
+            <h1 className="text-3xl sm:text-5xl font-light text-white leading-tight drop-shadow-lg" style={{ fontFamily: "var(--font-serif)" }}>
               Глемпинг Столът
             </h1>
-            <p className="text-moss text-lg leading-relaxed max-w-2xl">
-              Природата като класна стая. С. Столът, общ. Севлиево — сред хълмове, ливади и
-              чист въздух, на 2 часа от София.
+            <p className="text-white/80 text-base mt-2 max-w-xl">
+              С. Столът, общ. Севлиево — сред хълмове, ливади и чист въздух, на 2 часа от София.
             </p>
           </div>
         </section>
