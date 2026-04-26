@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { countdownToDate } from "@/lib/utils";
 
-const EARLY_BIRD_DEADLINE = new Date("2026-04-25T23:59:59");
+const EARLY_BIRD_DEADLINE = new Date("2026-04-30T23:59:59");
 const FAMILIES_ENROLLED = 47;
 
 export default function HeroSection() {

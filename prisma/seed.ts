@@ -67,7 +67,7 @@ async function main() {
 
   // Sessions
   const now = new Date();
-  const earlyBirdDeadline = new Date("2026-04-25");
+  const earlyBirdDeadline = new Date("2026-04-30");
 
   const artCampPhotos = [
     "/images/creative-camp.jpg",
