@@ -77,8 +77,8 @@ export default function SessionCard({ session }: SessionCardProps) {
         </div>
       )}
 
-      {/* Cover image */}
-      <div className="h-44 relative overflow-hidden bg-gradient-to-br from-forest/20 to-teal/10">
+      {/* Cover image — clickable → program page */}
+      <Link href={`/programs/${session.slug}`} className="block h-44 relative overflow-hidden bg-gradient-to-br from-forest/20 to-teal/10 cursor-pointer">
         {session.photoUrls?.[0] ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -92,7 +92,7 @@ export default function SessionCard({ session }: SessionCardProps) {
           </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-cream to-transparent" />
-      </div>
+      </Link>
 
       <div className="flex flex-col flex-1 p-5 gap-4">
         {/* Header */}
