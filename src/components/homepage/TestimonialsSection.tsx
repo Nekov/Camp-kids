@@ -30,7 +30,7 @@ export default async function TestimonialsSection() {
           </div>
           <div>
             <p className="text-forest font-semibold text-sm">{t.parentName}</p>
-            <p className="text-moss/60 text-xs">
+            <p className="text-moss/60 text-sm">
               {t.childAge && `Дете ${t.childAge} г.`}
               {t.childAge && t.sessionYear && " • "}
               {t.sessionYear && `Лагер ${t.sessionYear}`}
@@ -56,7 +56,7 @@ export default async function TestimonialsSection() {
         {/* Parents */}
         {parents.length > 0 && (
           <div className="mb-14">
-            <p className="text-xs text-moss/50 uppercase tracking-widest font-semibold mb-5">
+            <p className="text-sm text-moss/50 uppercase tracking-widest font-semibold mb-5">
               Мнения на родители
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -70,7 +70,7 @@ export default async function TestimonialsSection() {
         {/* Students */}
         {students.length > 0 && (
           <div>
-            <p className="text-xs text-moss/50 uppercase tracking-widest font-semibold mb-5">
+            <p className="text-sm text-moss/50 uppercase tracking-widest font-semibold mb-5">
               Мнения на ученици от ателието
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

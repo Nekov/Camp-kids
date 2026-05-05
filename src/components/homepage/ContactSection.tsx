@@ -43,7 +43,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-forest font-semibold">0885 571 638</p>
-                  <p className="text-moss text-xs">Обаждане, Viber, WhatsApp</p>
+                  <p className="text-moss text-sm">Обаждане, Viber, WhatsApp</p>
                 </div>
               </a>
 
@@ -56,7 +56,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-forest font-semibold">info@dreaminmypocket.org</p>
-                  <p className="text-moss text-xs">Отговор в рамките на 24 ч.</p>
+                  <p className="text-moss text-sm">Отговор в рамките на 24 ч.</p>
                 </div>
               </a>
 
@@ -66,7 +66,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-forest font-semibold">Глемпинг Столът</p>
-                  <p className="text-moss text-xs">с. Столът, общ. Севлиево</p>
+                  <p className="text-moss text-sm">с. Столът, общ. Севлиево</p>
                 </div>
               </div>
 
@@ -81,7 +81,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-forest font-semibold">WhatsApp / Viber</p>
-                  <p className="text-moss text-xs">0885 571 638</p>
+                  <p className="text-moss text-sm">0885 571 638</p>
                 </div>
               </a>
             </div>

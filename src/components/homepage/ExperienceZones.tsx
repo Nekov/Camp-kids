@@ -53,7 +53,7 @@ export default function ExperienceZones() {
               <div className="text-4xl mb-4">{zone.icon}</div>
               <h3 className="text-forest font-semibold text-lg mb-2">{zone.title}</h3>
               <p className="text-moss text-sm leading-relaxed mb-3">{zone.desc}</p>
-              <p className="text-moss/70 text-xs leading-relaxed">{zone.detail}</p>
+              <p className="text-moss/70 text-sm leading-relaxed">{zone.detail}</p>
               <div className="absolute bottom-0 left-6 right-6 h-0.5 rounded-full bg-teal opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}

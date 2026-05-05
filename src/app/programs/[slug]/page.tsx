@@ -185,7 +185,7 @@ export default async function SessionPage({ params }: Props) {
                   {amenities.map((a) => (
                     <div key={a.label} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-cream border border-forest/10 text-center">
                       <span className="text-2xl">{a.icon}</span>
-                      <span className="text-moss text-xs leading-tight">{a.label}</span>
+                      <span className="text-moss text-sm leading-tight">{a.label}</span>
                     </div>
                   ))}
                 </div>
@@ -206,17 +206,17 @@ export default async function SessionPage({ params }: Props) {
                           </div>
                           <div>
                             <h4 className="text-forest font-semibold text-sm">{trainer.name}</h4>
-                            <p className="text-teal text-xs">{trainer.title}</p>
+                            <p className="text-teal text-sm">{trainer.title}</p>
                           </div>
                         </div>
                         {trainer.credentials && (
-                          <p className="text-moss/50 text-xs mb-2">🎓 {trainer.credentials}</p>
+                          <p className="text-moss/50 text-sm mb-2">🎓 {trainer.credentials}</p>
                         )}
                         {trainer.bio && (
-                          <p className="text-moss text-xs leading-relaxed mb-2">{trainer.bio}</p>
+                          <p className="text-moss text-sm leading-relaxed mb-2">{trainer.bio}</p>
                         )}
                         {trainer.personalStatement && (
-                          <blockquote className="border-l-2 border-teal/30 pl-3 italic text-moss/70 text-xs">
+                          <blockquote className="border-l-2 border-teal/30 pl-3 italic text-moss/70 text-sm">
                             &ldquo;{trainer.personalStatement}&rdquo;
                           </blockquote>
                         )}
@@ -237,7 +237,7 @@ export default async function SessionPage({ params }: Props) {
                       <span className="text-xl shrink-0">{skill.icon}</span>
                       <div>
                         <h4 className="text-forest font-semibold text-sm mb-0.5">{skill.name}</h4>
-                        <p className="text-moss/70 text-xs">{skill.desc}</p>
+                        <p className="text-moss/70 text-sm">{skill.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -259,7 +259,7 @@ export default async function SessionPage({ params }: Props) {
                           ))}
                         </div>
                         <p className="text-forest/80 text-sm leading-relaxed mb-3">&ldquo;{t.quote}&rdquo;</p>
-                        <p className="text-moss/50 text-xs">
+                        <p className="text-moss/50 text-sm">
                           {t.parentName}
                           {t.childAge && ` • Дете ${t.childAge} г.`}
                           {t.sessionYear && ` • ${t.sessionYear}`}

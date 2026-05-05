@@ -39,8 +39,8 @@ export default function UspStrip() {
           {usps.map((usp) => (
             <div key={usp.title} className="flex flex-col items-center text-center gap-2">
               <span className="text-3xl">{usp.icon}</span>
-              <p className="text-forest font-semibold text-sm leading-tight">{usp.title}</p>
-              <p className="text-moss text-xs leading-relaxed">{usp.desc}</p>
+              <p className="text-forest font-semibold text-base leading-tight">{usp.title}</p>
+              <p className="text-moss text-sm leading-relaxed">{usp.desc}</p>
             </div>
           ))}
         </div>

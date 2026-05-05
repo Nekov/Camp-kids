@@ -62,8 +62,8 @@ export default function SkillsSection() {
             >
               <span className="text-3xl shrink-0">{skill.icon}</span>
               <div className="flex-1">
-                <h3 className="text-forest font-semibold text-sm mb-1">{skill.name}</h3>
-                <p className="text-moss text-xs leading-relaxed mb-3">{skill.desc}</p>
+                <h3 className="text-forest font-semibold text-base mb-1">{skill.name}</h3>
+                <p className="text-moss text-sm leading-relaxed mb-3">{skill.desc}</p>
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
