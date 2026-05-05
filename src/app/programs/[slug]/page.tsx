@@ -6,7 +6,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
 import SessionBookingBlock from "@/components/session/SessionBookingBlock";
-import SessionSchedule from "@/components/session/SessionSchedule";
 import SessionGallery from "@/components/session/SessionGallery";
 import { formatDateRange, spotsRemaining, fillPercent, formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -191,15 +190,6 @@ export default async function SessionPage({ params }: Props) {
                   ))}
                 </div>
               </section>
-
-              {/* Schedule */}
-              {session.schedule && (
-                <div className="mb-10">
-                  <SessionSchedule
-                    schedule={session.schedule as { days: Array<{ day: number; theme: string; morning: string; afternoon: string; evening: string }> }}
-                  />
-                </div>
-              )}
 
               {/* Trainers */}
               {session.trainers.length > 0 && (
