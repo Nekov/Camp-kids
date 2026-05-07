@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
 import SessionBookingBlock from "@/components/session/SessionBookingBlock";
 import SessionGallery from "@/components/session/SessionGallery";
-import { formatDateRange, spotsRemaining, fillPercent, formatPrice } from "@/lib/utils";
+import { formatDateRange, campDuration, spotsRemaining, fillPercent, formatPrice } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -131,6 +131,7 @@ export default async function SessionPage({ params }: Props) {
             <div className="flex flex-wrap gap-2">
               {[
                 { icon: "📅", text: formatDateRange(session.startDate, session.endDate) },
+                { icon: "🕐", text: campDuration(session.startDate, session.endDate) },
                 { icon: "👶", text: `${session.minAge}–${session.maxAge} години` },
                 { icon: "📍", text: "Глемпинг Столът, Севлиево" },
                 ...(earlyBird ? [{ icon: "💰", text: `От ${formatPrice(earlyBird.price)}`, highlight: true }] : []),

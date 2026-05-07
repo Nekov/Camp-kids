@@ -11,6 +11,11 @@ export function formatDate(date: Date | string, fmt = "d MMM yyyy") {
   return format(new Date(date), fmt, { locale: bg });
 }
 
+export function campDuration(start: Date | string, end: Date | string): string {
+  const days = differenceInDays(new Date(end), new Date(start)) + 1;
+  return `${days} дни`;
+}
+
 export function formatDateRange(start: Date | string, end: Date | string) {
   const s = new Date(start);
   const e = new Date(end);

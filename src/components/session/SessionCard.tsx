@@ -7,6 +7,7 @@ import type { Session, PricingTier } from "@prisma/client";
 import {
   cn,
   formatDateRange,
+  campDuration,
   fillPercent,
   spotsRemaining,
   getProgressLabel,
@@ -106,6 +107,9 @@ export default function SessionCard({ session }: SessionCardProps) {
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
             <span className="inline-flex items-center gap-1.5 bg-forest/8 border border-forest/15 text-forest text-xs font-semibold px-2.5 py-1 rounded-full">
               📅 {formatDateRange(session.startDate, session.endDate)}
+            </span>
+            <span className="inline-flex items-center gap-1 bg-teal/10 border border-teal/20 text-teal text-xs font-semibold px-2.5 py-1 rounded-full">
+              🕐 {campDuration(session.startDate, session.endDate)}
             </span>
           </div>
           <p className="text-moss/60 text-xs mt-1">📍 Глемпинг Столът, Севлиево</p>
