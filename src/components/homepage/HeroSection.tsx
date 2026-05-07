@@ -76,16 +76,6 @@ export default function HeroSection() {
 
             {/* Social proof */}
             <div className="flex items-center gap-2 text-moss text-sm">
-              <div className="flex -space-x-2">
-                {["Д", "И", "М", "Е", "Т"].map((letter, i) => (
-                  <div
-                    key={i}
-                    className="w-7 h-7 rounded-full bg-teal/20 flex items-center justify-center text-teal text-xs font-bold border-2 border-sand"
-                  >
-                    {letter}
-                  </div>
-                ))}
-              </div>
               <span>
                 <span className="text-forest font-semibold">{FAMILIES_ENROLLED} семейства</span> вече са записани тази година
               </span>
