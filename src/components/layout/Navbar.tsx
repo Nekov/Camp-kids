@@ -41,7 +41,7 @@ export default function Navbar() {
             М
           </div>
           <span className={`font-semibold text-sm sm:text-base leading-tight transition-colors ${scrolled ? "text-white" : "text-forest"}`}>
-            Мечта в джоба
+            Фондация Мечта в джоба
           </span>
         </Link>
 

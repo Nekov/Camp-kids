@@ -42,8 +42,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-moss text-lg leading-relaxed mb-10 max-w-md">
-              Творчески лагери сред природата на Глемпинг Столът,
-              Севлиево. Деца 7–18 г. Над 280 доволни участника от миналите издания.
+              Лагери с много творчество и наука в Глемпинг с. Столът, Севлиево. Деца 7–18 г. Над 280 доволни участника от миналите издания.
             </p>
 
             {/* Countdown pill */}
@@ -117,11 +116,11 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs text-moss">
             {[
-              "Фондация \u201eМечта в джоба\u201c",
+              "Организатор: Фондация \u201eМечта в джоба\u201c",
               "8+ години опит",
               "Глемпинг Столът, Севлиево",
-              "1:6 ратио деца/педагог",
-              "Магистри педагози",
+              "1:6 съотношение деца/педагози",
+              "Магистри педагози с богат опит",
             ].map((item, i, arr) => (
               <span key={item} className="flex items-center gap-3">
                 <span className="flex items-center gap-1.5">

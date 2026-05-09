@@ -2,8 +2,8 @@ export default function UspStrip() {
   const usps = [
     {
       icon: "🎨",
-      title: "Творчески дисциплини",
-      desc: "Живопис, скулптура, STEAM, природни науки",
+      title: "STEAM дисциплини",
+      desc: "Изкуства и природни науки",
     },
     {
       icon: "🎓",
@@ -13,7 +13,7 @@ export default function UspStrip() {
     {
       icon: "🌳",
       title: "Глемпинг в природата",
-      desc: "Тентове, баня, климатик, басейн",
+      desc: "21м2 луксозни палатки със собствена баня. Басейн.",
     },
     {
       icon: "👨‍👩‍👧‍👦",
