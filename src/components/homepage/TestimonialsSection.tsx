@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { prisma, withRetry } from "@/lib/db";
 import type { Testimonial } from "@prisma/client";
 
 function Card({ t }: { t: Testimonial }) {
@@ -33,10 +33,12 @@ export default async function TestimonialsSection() {
   let all: Testimonial[] = [];
 
   try {
-    all = await prisma.testimonial.findMany({
-      where: { featured: true },
-      orderBy: { createdAt: "asc" },
-    });
+    all = await withRetry(() =>
+      prisma.testimonial.findMany({
+        where: { featured: true },
+        orderBy: { createdAt: "asc" },
+      })
+    );
   } catch (err) {
     console.error("TestimonialsSection: DB error", err);
   }

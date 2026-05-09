@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { prisma } from "@/lib/db";
+import { prisma, withRetry } from "@/lib/db";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StickyCtaBar from "@/components/layout/StickyCtaBar";
@@ -16,7 +16,9 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamic = "force-dynamic";
+// Cache program pages for 30 seconds — spots data stays fresh enough
+// while eliminating per-request DB hits during high ad traffic.
+export const revalidate = 30;
 
 export async function generateStaticParams() {
   // Group slugs
@@ -56,11 +58,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 async function GroupPage({ slug }: { slug: string }) {
   const group = getGroupBySlug(slug)!;
 
-  const sessions = await prisma.session.findMany({
-    where: { slug: { in: group.sessionSlugs }, status: { not: "ARCHIVED" } },
-    include: { pricingTiers: true, trainers: { include: { trainer: true } }, testimonials: { take: 3 } },
-    orderBy: { startDate: "asc" },
-  });
+  const sessions = await withRetry(() =>
+    prisma.session.findMany({
+      where: { slug: { in: group.sessionSlugs }, status: { not: "ARCHIVED" } },
+      include: { pricingTiers: true, trainers: { include: { trainer: true } }, testimonials: { take: 3 } },
+      orderBy: { startDate: "asc" },
+    })
+  );
 
   if (sessions.length === 0) notFound();
 
@@ -308,14 +312,16 @@ async function GroupPage({ slug }: { slug: string }) {
 // ─── SESSION PAGE (individual fallback) ─────────────────────────────────────
 
 async function SessionPage({ slug }: { slug: string }) {
-  const session = await prisma.session.findUnique({
-    where: { slug },
-    include: {
-      pricingTiers: true,
-      trainers: { include: { trainer: true } },
-      testimonials: { take: 3 },
-    },
-  });
+  const session = await withRetry(() =>
+    prisma.session.findUnique({
+      where: { slug },
+      include: {
+        pricingTiers: true,
+        trainers: { include: { trainer: true } },
+        testimonials: { take: 3 },
+      },
+    })
+  );
 
   if (!session) notFound();
 

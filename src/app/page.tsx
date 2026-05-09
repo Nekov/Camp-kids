@@ -1,4 +1,7 @@
-export const dynamic = "force-dynamic";
+// Revalidate every 60 seconds (ISR). The vast majority of requests are served
+// from cache — the DB is only touched once per minute at most, not on every hit.
+// This is the single most important resilience change for high ad traffic.
+export const revalidate = 60;
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";

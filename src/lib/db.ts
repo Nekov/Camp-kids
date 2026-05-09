@@ -8,18 +8,52 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  // Reuse the pg Pool across hot-reloads (dev) and lambda warm invocations (prod)
   if (!globalForPrisma.pgPool) {
     globalForPrisma.pgPool = new Pool({
       connectionString: process.env.DATABASE_URL!,
-      max: 5, // keep well within Supabase's 15-connection session-mode limit
+      // Serverless: keep pool tiny. Many concurrent Vercel instances each
+      // holding 5 connections quickly exhaust Supabase's connection limit.
+      max: 2,
+      // Fail fast rather than hanging — lets the try/catch fallback kick in
+      // and serve cached/static content instead of blocking the response.
+      connectionTimeoutMillis: 5_000,
+      // Release idle connections quickly so other instances can claim them.
+      idleTimeoutMillis: 10_000,
+    });
+
+    globalForPrisma.pgPool.on("error", (err) => {
+      console.error("pg pool error:", err.message);
     });
   }
+
   const adapter = new PrismaPg(globalForPrisma.pgPool);
   return new PrismaClient({ adapter });
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-
-// Always cache on globalThis — not just in dev — so serverless warm invocations reuse it
 globalForPrisma.prisma = prisma;
+
+/**
+ * Retry wrapper — attempts the async fn up to `attempts` times with
+ * exponential backoff before re-throwing. Use this around critical DB
+ * queries (homepage, program pages) so a single transient connection blip
+ * doesn't result in a 500 for the visitor.
+ */
+export async function withRetry<T>(
+  fn: () => Promise<T>,
+  attempts = 3,
+  delayMs = 150
+): Promise<T> {
+  let lastErr: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      if (i < attempts - 1) {
+        await new Promise((r) => setTimeout(r, delayMs * (i + 1)));
+      }
+    }
+  }
+  throw lastErr;
+}

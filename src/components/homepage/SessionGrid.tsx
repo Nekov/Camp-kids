@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { prisma, withRetry } from "@/lib/db";
 import { PROGRAM_GROUPS } from "@/lib/programGroups";
 import ProgramGroupCard from "@/components/homepage/ProgramGroupCard";
 
@@ -7,11 +7,13 @@ export default async function SessionGrid() {
   let groupedData: { group: (typeof PROGRAM_GROUPS)[number]; sessions: Awaited<ReturnType<typeof prisma.session.findMany<{ include: { pricingTiers: true } }>>> }[] = [];
 
   try {
-    const sessions = await prisma.session.findMany({
-      where: { status: { not: "ARCHIVED" } },
-      include: { pricingTiers: true },
-      orderBy: [{ displayOrder: "asc" }, { startDate: "asc" }],
-    });
+    const sessions = await withRetry(() =>
+      prisma.session.findMany({
+        where: { status: { not: "ARCHIVED" } },
+        include: { pricingTiers: true },
+        orderBy: [{ displayOrder: "asc" }, { startDate: "asc" }],
+      })
+    );
 
     groupedData = PROGRAM_GROUPS.map((group) => ({
       group,
