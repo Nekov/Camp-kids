@@ -65,7 +65,7 @@ export default function HeroSection() {
                 Виж програмите
               </a>
               <Link
-                href="/register/session-1"
+                href="/#sessions"
                 className="inline-flex items-center justify-center text-forest font-semibold px-8 py-4 rounded-xl text-base border border-forest/25 hover:border-forest/50 hover:bg-forest/5 transition-all duration-200"
               >
                 Запишете дете →

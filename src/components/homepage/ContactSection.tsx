@@ -134,15 +134,18 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-session" className="block text-moss text-sm mb-1.5">Интересуваща сесия</label>
+                  <label htmlFor="contact-session" className="block text-moss text-sm mb-1.5">Интересуваща програма</label>
                   <select id="contact-session" className="w-full bg-sand border border-forest/15 rounded-xl px-4 py-3 text-forest text-sm focus:outline-none focus:border-teal/50 transition-all">
-                    <option value="">Изберете сесия</option>
-                    <option value="session-1">Сесия 1 — 31 май–6 юни (7–10 г.)</option>
-                    <option value="session-2">Сесия 2 — 7–13 юни (7–10 г.)</option>
-                    <option value="session-3">Сесия 3 — 14–20 юни (7–14 г.)</option>
-                    <option value="session-4">Сесия 4 — 21–27 юни (7–14 г.)</option>
-                    <option value="session-5">Сесия 5 — 28 юни–4 юли (7–14 г.)</option>
-                    <option value="plein-air">Пленер — 5–18 юли (14–18 г.)</option>
+                    <option value="">Изберете програма</option>
+                    <option value="creative-camp-1">Детски творчески лагер — Сесия 1 (14–20 юни, 7–14 г.)</option>
+                    <option value="creative-camp-2">Детски творчески лагер — Сесия 2 (21–27 юни, 7–14 г.)</option>
+                    <option value="steam-1">STEAM / наука и изкуство — Сесия 1 (28 юни–4 юли, 7–14 г.)</option>
+                    <option value="plein-air">Пленер под звездното небе — Сесия 1 (5–18 юли, 14–18 г.)</option>
+                    <option value="international-friends">Международен лагер „Приятели" (26 юли–8 авг, 7–18 г.)</option>
+                    <option value="steam-2">STEAM / наука и изкуство — Сесия 2 (9–15 авг, 14–18 г.)</option>
+                    <option value="leaders-academy">Лидерска академия (16–25 авг, 14–18 г.)</option>
+                    <option value="creative-camp-autumn">Детски творчески лагер — Есенна сесия (30 авг–5 сеп, 7–14 г.)</option>
+                    <option value="plein-air-2">Пленер под звездното небе — Есенна сесия (6–13 сеп, 14–18 г.)</option>
                   </select>
                 </div>
 

@@ -40,16 +40,15 @@ export default function OrganizersSection() {
               в работа с деца.
             </p>
             <p className="text-moss text-base leading-relaxed mb-6">
-              Вярваме, че децата заслужават да работят с истински творци —
-              не просто с хора, прочели книги за изкуство.
+              Към нашите летни лагери се присъединяват и едни от най-добрите, практикуващи педагози в научните дисциплини.
             </p>
 
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-teal/15 flex items-center justify-center text-teal font-bold text-sm">
-                400+
+                280+
               </div>
               <p className="text-moss text-sm">
-                <span className="text-forest font-semibold">Доверени от 400+ семейства</span>{" "}
+                <span className="text-forest font-semibold">Доверени от 280+ семейства</span>{" "}
                 от цяла България
               </p>
             </div>

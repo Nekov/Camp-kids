@@ -48,12 +48,11 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Програми</h4>
             <ul className="space-y-2.5 text-sm">
               {[
-                { name: "Сесия 1 — 31 май–6 юни", slug: "session-1" },
-                { name: "Сесия 2 — 7–13 юни", slug: "session-2" },
-                { name: "Сесия 3 — 14–20 юни", slug: "session-3" },
-                { name: "Сесия 4 — 21–27 юни", slug: "session-4" },
-                { name: "Сесия 5 — 28 юни–4 юли", slug: "session-5" },
-                { name: "Пленер — 5–18 юли", slug: "plein-air" },
+                { name: "Детски творчески лагер", slug: "creative-camp" },
+                { name: "STEAM / наука и изкуство", slug: "steam-camp" },
+                { name: "Пленер под звездното небе", slug: "plein-air" },
+                { name: 'Международен лагер „Приятели”', slug: 'international-friends' },
+                { name: "Лидерска академия", slug: "leaders-academy" },
               ].map((s) => (
                 <li key={s.slug}>
                   <Link href={`/programs/${s.slug}`} className="text-white/60 hover:text-teal transition-colors">
@@ -107,7 +106,7 @@ export default function Footer() {
               </li>
             </ul>
             <Link
-              href="/programs/session-1"
+              href="/#sessions"
               className="inline-block mt-5 bg-teal hover:bg-teal-dark text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all"
             >
               Запишете дете →
@@ -117,7 +116,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
-          <p>© 2026 Фондация „Мечта в джоба". Всички права запазени.</p>
+          <p>© 2026 Фондация \u201eМечта в джоба". Всички права запазени.</p>
           <p>IBAN: BG64FINV91501217544623 • ФОНДАЦИЯ МЕЧТА В ДЖОБА</p>
         </div>
       </div>
