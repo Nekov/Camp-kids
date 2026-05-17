@@ -21,18 +21,10 @@ interface Props {
 export const revalidate = 30;
 export const maxDuration = 30;
 
-export async function generateStaticParams() {
-  // Group slugs
-  const groupParams = PROGRAM_GROUPS.map((g) => ({ slug: g.slug }));
-  // Individual session slugs (fallback)
-  try {
-    const sessions = await prisma.session.findMany({ select: { slug: true } });
-    const sessionParams = sessions.map((s) => ({ slug: s.slug }));
-    return [...groupParams, ...sessionParams];
-  } catch {
-    return groupParams;
-  }
-}
+// No generateStaticParams — all program pages are built on first request
+// and then cached by ISR (revalidate=30). This avoids exhausting Supabase's
+// session-pooler connection limit during parallel build-time prerendering.
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

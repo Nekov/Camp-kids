@@ -1,15 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 
-// Placeholder gallery items — will be replaced with real photos
-const galleryItems = [
-  { emoji: "🎨", label: "Творческо ателие", category: "Ателие" },
-  { emoji: "🌿", label: "Глемпинг тентовете", category: "Нощувка" },
-  { emoji: "🔬", label: "STEAM работилница", category: "STEAM" },
-  { emoji: "🌅", label: "Залез над поляната", category: "Природа" },
-  { emoji: "🏕️", label: "Лагерен огън", category: "Вечер" },
-  { emoji: "🖌️", label: "Пленер сред природата", category: "Ателие" },
-  { emoji: "🤝", label: "Групов проект", category: "Екип" },
-  { emoji: "🏆", label: "Ден на родителите", category: "Празник" },
+// Pick a curated subset that looks great in the homepage grid
+const photos = [
+  { src: "/images/location/gallery-01.jpg", wide: true },
+  { src: "/images/location/gallery-04.jpg", wide: false },
+  { src: "/images/location/gallery-07.jpg", wide: false },
+  { src: "/images/location/gallery-10.jpg", wide: false },
+  { src: "/images/location/gallery-13.jpg", wide: false },
+  { src: "/images/location/gallery-16.jpg", wide: false },
+  { src: "/images/location/gallery-19.jpg", wide: false },
+  { src: "/images/location/gallery-22.jpg", wide: false },
+  { src: "/images/location/gallery-25.png", wide: false },
+  { src: "/images/location/gallery-28.jpg", wide: false },
+  { src: "/images/location/gallery-03.jpg", wide: false },
 ];
 
 export default function GallerySection() {
@@ -24,26 +28,34 @@ export default function GallerySection() {
             Усети атмосферата
           </h2>
           <p className="mt-3 text-moss max-w-xl mx-auto text-sm">
-            Снимки от предишни сесии — ателиетата, глемпинга, природата и незабравимите моменти.
+            Снимки от Глемпинг Столът — нашата база сред природата в с. Столът, Севлиево.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {galleryItems.map((item, i) => (
-            <div
+        {/* Photo grid — first photo spans 2 cols + 2 rows */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+          {photos.map((photo, i) => (
+            <Link
               key={i}
-              className={`group relative rounded-xl overflow-hidden bg-linen border border-forest/10 hover:border-teal/30 hover:shadow-md transition-all duration-300 cursor-pointer ${i === 0 ? "col-span-2 row-span-2" : ""}`}
-              style={{ aspectRatio: "1" }}
+              href="/location"
+              className={`group relative rounded-xl overflow-hidden bg-linen ${
+                i === 0 ? "col-span-2 row-span-2" : ""
+              }`}
+              style={{ aspectRatio: i === 0 ? "1" : "4/3" }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                <span className={`${i === 0 ? "text-6xl" : "text-4xl"}`}>{item.emoji}</span>
-                <span className="text-moss/60 text-xs">{item.category}</span>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-forest/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform">
-                <p className="text-white text-xs font-medium">{item.label}</p>
-              </div>
-            </div>
+              <Image
+                src={photo.src}
+                alt="Глемпинг Столът"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes={
+                  i === 0
+                    ? "(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 50vw"
+                    : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                }
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
           ))}
         </div>
 
@@ -52,7 +64,7 @@ export default function GallerySection() {
             href="/location"
             className="inline-flex items-center gap-2 bg-teal hover:bg-teal-dark text-white font-semibold px-6 py-3 rounded-full transition-all"
           >
-            Виж локацията в детайл →
+            Виж всички снимки от локацията →
           </Link>
         </div>
       </div>
