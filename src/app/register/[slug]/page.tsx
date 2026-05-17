@@ -25,12 +25,14 @@ export default async function RegisterPage({ params }: Props) {
   });
   if (!session) notFound();
 
+  const stripeEnabled = !!process.env.STRIPE_SECRET_KEY;
+
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-sand pt-24 pb-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <RegistrationForm session={session} />
+          <RegistrationForm session={session} stripeEnabled={stripeEnabled} />
         </div>
       </main>
       <Footer />

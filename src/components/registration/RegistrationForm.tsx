@@ -12,6 +12,7 @@ type SessionWithPricing = Session & { pricingTiers: PricingTier[] };
 
 interface RegistrationFormProps {
   session: SessionWithPricing;
+  stripeEnabled: boolean;
 }
 
 export interface ChildData {
@@ -22,7 +23,7 @@ export interface ChildData {
   medicalNotes?: string;
 }
 
-export default function RegistrationForm({ session }: RegistrationFormProps) {
+export default function RegistrationForm({ session, stripeEnabled }: RegistrationFormProps) {
   const router = useRouter();
   const isFlowB = session.flowType === "B";
   const totalSteps = isFlowB ? 3 : 2;
@@ -83,7 +84,8 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ step: 2, registrationId, ...parentData }),
       });
-      if (!res.ok) throw new Error("Грешка при записване");
+      const resData = await res.json();
+      if (!res.ok) throw new Error(resData.error || "Грешка при записване");
 
       if (!isFlowB) {
         // Flow A: submit and go to confirmation
@@ -203,6 +205,7 @@ export default function RegistrationForm({ session }: RegistrationFormProps) {
           totalAmount={totalAmount}
           children={children}
           sessionName={session.name}
+          stripeEnabled={stripeEnabled}
         />
       )}
     </div>

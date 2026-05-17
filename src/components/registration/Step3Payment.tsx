@@ -10,9 +10,10 @@ interface Step3PaymentProps {
   totalAmount: number | null;
   children: ChildData[];
   sessionName: string;
+  stripeEnabled: boolean;
 }
 
-export default function Step3Payment({ onPay, onBack, loading, totalAmount, children, sessionName }: Step3PaymentProps) {
+export default function Step3Payment({ onPay, onBack, loading, totalAmount, children, sessionName, stripeEnabled }: Step3PaymentProps) {
   return (
     <div className="space-y-6">
       {/* Summary */}
@@ -43,22 +44,24 @@ export default function Step3Payment({ onPay, onBack, loading, totalAmount, chil
       <div className="space-y-3">
         <h3 className="text-forest font-bold text-sm">Изберете начин на плащане</h3>
 
-        <button
-          onClick={() => onPay("STRIPE")}
-          disabled={loading}
-          className="w-full flex items-center gap-4 p-5 rounded-2xl bg-cream border border-forest/10 hover:border-teal/40 hover:bg-mint transition-all group text-left disabled:opacity-50"
-        >
-          <div className="w-12 h-12 rounded-xl bg-teal/10 flex items-center justify-center text-2xl shrink-0">
-            💳
-          </div>
-          <div className="flex-1">
-            <p className="text-forest font-bold text-sm">Плащане с карта</p>
-            <p className="text-moss text-xs mt-0.5">
-              Платете депозита €200 сега онлайн. Сигурно, чрез Stripe.
-            </p>
-          </div>
-          <span className="text-moss/40 group-hover:text-teal transition-colors text-lg">→</span>
-        </button>
+        {stripeEnabled && (
+          <button
+            onClick={() => onPay("STRIPE")}
+            disabled={loading}
+            className="w-full flex items-center gap-4 p-5 rounded-2xl bg-cream border border-forest/10 hover:border-teal/40 hover:bg-mint transition-all group text-left disabled:opacity-50"
+          >
+            <div className="w-12 h-12 rounded-xl bg-teal/10 flex items-center justify-center text-2xl shrink-0">
+              💳
+            </div>
+            <div className="flex-1">
+              <p className="text-forest font-bold text-sm">Плащане с карта</p>
+              <p className="text-moss text-xs mt-0.5">
+                Платете депозита €200 сега онлайн. Сигурно, чрез Stripe.
+              </p>
+            </div>
+            <span className="text-moss/40 group-hover:text-teal transition-colors text-lg">→</span>
+          </button>
+        )}
 
         <button
           onClick={() => onPay("BANK_TRANSFER")}

@@ -167,10 +167,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid step" }, { status: 400 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Validation error", details: error.issues }, { status: 400 });
+      console.error("Registration validation error:", error.issues);
+      return NextResponse.json({ error: "Невалидни данни", details: error.issues }, { status: 400 });
     }
-    console.error("Registration error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("Registration error:", msg, error);
+    return NextResponse.json({ error: "Грешка при записване. Опитайте отново.", detail: msg }, { status: 500 });
   }
 }
 
