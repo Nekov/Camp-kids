@@ -2,16 +2,18 @@ import Link from "next/link";
 import Image from "next/image";
 
 // Pick a curated subset that looks great in the homepage grid
+// Pool photos are spread apart (positions 3 and 9) so they don't sit next to each other
 const photos = [
   { src: "/images/location/gallery-01.jpg", wide: true },
   { src: "/images/location/gallery-04.jpg", wide: false },
   { src: "/images/location/gallery-07.jpg", wide: false },
-  { src: "/images/location/gallery-10.jpg", wide: false },
+  { src: "/images/pool-1.png",              wide: false }, // pool
   { src: "/images/location/gallery-13.jpg", wide: false },
   { src: "/images/location/gallery-16.jpg", wide: false },
   { src: "/images/location/gallery-19.jpg", wide: false },
   { src: "/images/location/gallery-22.jpg", wide: false },
-  { src: "/images/location/gallery-25.png", wide: false },
+  { src: "/images/location/gallery-10.jpg", wide: false },
+  { src: "/images/pool-2.png",              wide: false }, // pool + kids
   { src: "/images/location/gallery-28.jpg", wide: false },
   { src: "/images/location/gallery-03.jpg", wide: false },
 ];
