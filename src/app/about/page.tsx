@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
@@ -68,8 +69,15 @@ export default function AboutPage() {
             <span className="text-teal text-xs font-semibold uppercase tracking-widest">Основателят</span>
           </div>
           <div className="flex flex-col sm:flex-row gap-8 items-start">
-            <div className="w-20 h-20 rounded-full bg-teal/10 flex items-center justify-center text-4xl shrink-0">
-              👩‍🎨
+            <div className="shrink-0">
+              <Image
+                src="/images/sevda.png"
+                alt="Севда Троева — основател на Мечта в джоба"
+                width={160}
+                height={212}
+                className="rounded-2xl object-cover shadow-md"
+                priority
+              />
             </div>
             <div className="space-y-4 text-moss text-base leading-relaxed">
               <h2 className="text-2xl font-light text-forest" style={{ fontFamily: "var(--font-serif)" }}>
