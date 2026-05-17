@@ -5,13 +5,12 @@ import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const sessions = [
-  { name: "Сесия 1 — 31 май–6 юни", slug: "session-1", ages: "7–10 г." },
-  { name: "Сесия 2 — 7–13 юни", slug: "session-2", ages: "7–10 г." },
-  { name: "Сесия 3 — 14–20 юни", slug: "session-3", ages: "7–14 г." },
-  { name: "Сесия 4 — 21–27 юни", slug: "session-4", ages: "7–14 г." },
-  { name: "Сесия 5 — 28 юни–4 юли", slug: "session-5", ages: "7–14 г." },
-  { name: "Пленер — 5–18 юли", slug: "plein-air", ages: "14–18 г." },
+const programs = [
+  { name: "Детски творчески лагер", slug: "creative-camp", ages: "7–14 г." },
+  { name: "STEAM / наука и изкуство", slug: "steam-camp", ages: "7–14 г." },
+  { name: "Пленер под звездното небе", slug: "plein-air", ages: "14–18 г." },
+  { name: 'Международен лагер „Приятели”', slug: "international-friends", ages: "7–18 г." },
+  { name: "Лидерска академия", slug: "leaders-academy", ages: "12–18 г." },
 ];
 
 export default function Navbar() {
@@ -67,7 +66,7 @@ export default function Navbar() {
                 onMouseLeave={() => setProgramsOpen(false)}
               >
                 <div className="bg-forest rounded-xl border border-white/10 overflow-hidden shadow-xl">
-                  {sessions.map((s) => (
+                  {programs.map((s) => (
                     <Link
                       key={s.slug}
                       href={`/programs/${s.slug}`}
@@ -102,7 +101,7 @@ export default function Navbar() {
             0885 571 638
           </a>
           <Link
-            href="/programs/session-1"
+            href="/#sessions"
             className={`font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 ${scrolled ? "bg-teal hover:bg-teal-dark text-white shadow-lg" : "text-forest border border-forest/30 hover:bg-forest/5"}`}
           >
             Запишете дете →
@@ -136,7 +135,7 @@ export default function Navbar() {
               </button>
               {programsOpen && (
                 <div className="bg-forest-mid/50 rounded-lg my-2 overflow-hidden">
-                  {sessions.map((s) => (
+                  {programs.map((s) => (
                     <Link
                       key={s.slug}
                       href={`/programs/${s.slug}`}
@@ -158,7 +157,7 @@ export default function Navbar() {
                 📞 0885 571 638
               </a>
               <Link
-                href="/programs/session-1"
+                href="/#sessions"
                 className="block text-center bg-teal text-white font-semibold py-3 rounded-full"
                 onClick={() => setMobileOpen(false)}
               >
