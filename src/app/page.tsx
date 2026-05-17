@@ -33,8 +33,8 @@ export default function HomePage() {
         <ExperienceZones />
         <OrganizersSection />
         <NumbersStrip />
-        <TestimonialsSection />
         <GallerySection />
+        <TestimonialsSection />
         <ParentsDaySection />
         <ContactSection />
       </main>
