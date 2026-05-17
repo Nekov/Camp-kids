@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import LocationGallery from "@/components/location/LocationGallery";
 
 export const metadata: Metadata = {
   title: "Глемпинг Столът — Локацията | Мечта в джоба",
@@ -124,18 +125,11 @@ export default function LocationPage() {
           </div>
         </section>
 
-        {/* Gallery placeholder */}
+        {/* Gallery */}
         <section className="py-16 bg-linen border-y border-forest/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl font-light text-forest mb-8" style={{ fontFamily: "var(--font-serif)" }}>Галерия</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {["🏕️", "🌄", "🔥", "🏊", "🌿", "⛺"].map((emoji, i) => (
-                <div key={i} className={`rounded-xl bg-forest/10 border border-forest/10 flex items-center justify-center ${i === 0 ? "col-span-2 h-48" : "h-32"}`}>
-                  <span className="text-4xl opacity-40">{emoji}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-moss/50 text-sm mt-4 text-center">Снимки от Глемпинг Столът — очаквайте скоро</p>
+            <LocationGallery />
           </div>
         </section>
 
