@@ -1,7 +1,3 @@
 {
-  "functions": {
-    "src/app/**": {
-      "maxDuration": 30
-    }
-  }
+  "framework": "nextjs"
 }

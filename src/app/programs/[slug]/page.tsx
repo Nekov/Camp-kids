@@ -19,6 +19,7 @@ interface Props {
 // Cache program pages for 30 seconds — spots data stays fresh enough
 // while eliminating per-request DB hits during high ad traffic.
 export const revalidate = 30;
+export const maxDuration = 30;
 
 export async function generateStaticParams() {
   // Group slugs

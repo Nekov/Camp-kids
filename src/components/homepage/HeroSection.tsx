@@ -36,7 +36,7 @@ export default function HeroSection() {
               className="text-5xl sm:text-6xl lg:text-7xl font-light text-forest leading-[1.08] mb-6"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              Седмица,{" "}
+              Ваканцията,{" "}
               <em className="text-teal">която ще помнят</em>{" "}
               завинаги.
             </h1>
