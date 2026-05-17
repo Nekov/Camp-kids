@@ -6,7 +6,7 @@ import type { Session, PricingTier } from "@prisma/client";
 import { formatDateRange, formatPrice } from "@/lib/utils";
 import Step1Children from "./Step1Children";
 import Step2Parent from "./Step2Parent";
-import Step3Payment from "./Step3Payment";
+import Step3Payment, { type PaymentPlan } from "./Step3Payment";
 
 type SessionWithPricing = Session & { pricingTiers: PricingTier[] };
 
@@ -105,7 +105,7 @@ export default function RegistrationForm({ session, stripeEnabled }: Registratio
     }
   }
 
-  async function handlePayment(method: "STRIPE" | "BANK_TRANSFER") {
+  async function handlePayment(method: "STRIPE" | "BANK_TRANSFER", plan: PaymentPlan) {
     if (!registrationId) return;
     setLoading(true);
     setError(null);
@@ -114,18 +114,23 @@ export default function RegistrationForm({ session, stripeEnabled }: Registratio
         const res = await fetch("/api/stripe/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ registrationId }),
+          body: JSON.stringify({ registrationId, plan }),
         });
         const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Грешка при плащане");
         if (data.url) window.location.href = data.url;
       } else {
         // Bank transfer: submit then go to confirmation
-        await fetch("/api/registrations", {
+        const res = await fetch("/api/registrations", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ step: "submit", registrationId }),
+          body: JSON.stringify({ step: "submit", registrationId, plan }),
         });
-        router.push(`/register/${session.slug}/confirmation?id=${registrationId}&payment=bank`);
+        if (!res.ok) {
+          const d = await res.json();
+          throw new Error(d.error || "Грешка при записване");
+        }
+        router.push(`/register/${session.slug}/confirmation?id=${registrationId}&payment=bank&plan=${plan}`);
       }
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Грешка");
@@ -199,7 +204,7 @@ export default function RegistrationForm({ session, stripeEnabled }: Registratio
       )}
       {step === 3 && isFlowB && registrationId && (
         <Step3Payment
-          onPay={handlePayment}
+          onPay={(method, plan) => handlePayment(method, plan)}
           onBack={() => setStep(2)}
           loading={loading}
           totalAmount={totalAmount}

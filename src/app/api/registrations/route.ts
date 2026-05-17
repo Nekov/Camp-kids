@@ -139,6 +139,7 @@ export async function POST(req: NextRequest) {
 
     if (step === "submit") {
       const data = submitSchema.parse(body);
+      const plan = body.plan === "FULL" ? "FULL" : "DEPOSIT";
 
       await prisma.registration.update({
         where: { id: data.registrationId },
@@ -146,6 +147,7 @@ export async function POST(req: NextRequest) {
           status: "FORM_SUBMITTED",
           lastStepReached: 3,
           submittedAt: new Date(),
+          internalNotes: plan === "FULL" ? "Пълно плащане" : "Депозит €200",
         },
       });
 
