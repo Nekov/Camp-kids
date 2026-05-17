@@ -9,16 +9,26 @@ const globalForPrisma = globalThis as unknown as {
 
 function createPrismaClient() {
   if (!globalForPrisma.pgPool) {
+    // Parse the DATABASE_URL so we can pass explicit SSL options.
+    // Using a raw connectionString with sslmode= overrides the ssl object,
+    // which breaks Supabase's transaction pooler (port 6543). Explicit params
+    // let us force rejectUnauthorized:false for the pooler's wildcard cert.
+    const url = new URL(process.env.DATABASE_URL!);
     globalForPrisma.pgPool = new Pool({
-      connectionString: process.env.DATABASE_URL!,
+      host: url.hostname,
+      port: Number(url.port) || 5432,
+      database: url.pathname.replace(/^\//, ""),
+      user: url.username,
+      password: url.password,
       // Serverless: keep pool tiny. Many concurrent Vercel instances each
-      // holding 5 connections quickly exhaust Supabase's connection limit.
+      // holding connections quickly exhaust Supabase's connection limit.
       max: 2,
-      // Fail fast rather than hanging — lets the try/catch fallback kick in
-      // and serve cached/static content instead of blocking the response.
+      // Fail fast rather than hanging — lets the try/catch fallback kick in.
       connectionTimeoutMillis: 5_000,
       // Release idle connections quickly so other instances can claim them.
       idleTimeoutMillis: 10_000,
+      // Supabase pooler uses a wildcard cert — skip hostname verification.
+      ssl: { rejectUnauthorized: false },
     });
 
     globalForPrisma.pgPool.on("error", (err) => {
