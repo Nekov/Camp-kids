@@ -3,6 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
+
+// Replaces bare phone numbers in FAQ answer strings with tappable tel: links
+function FaqAnswer({ text }: { text: string }) {
+  const parts = text.split(/(0\d{3}\s?\d{3}\s?\d{3}|\+359\s?\d{3}\s?\d{6})/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        /^(0\d{3}|\+359)/.test(part) ? (
+          <a
+            key={i}
+            href={`tel:+359${part.replace(/^0/, "").replace(/\s/g, "")}`}
+            className="text-teal font-semibold hover:underline"
+          >
+            {part}
+          </a>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
 import Footer from "@/components/layout/Footer";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -165,7 +187,7 @@ export default function FaqPage() {
                       </button>
                       {isOpen && (
                         <div className="px-4 pb-4 border-t border-forest/8">
-                          <p className="text-moss text-sm leading-relaxed pt-3">{item.a}</p>
+                          <p className="text-moss text-sm leading-relaxed pt-3"><FaqAnswer text={item.a} /></p>
                         </div>
                       )}
                     </div>
